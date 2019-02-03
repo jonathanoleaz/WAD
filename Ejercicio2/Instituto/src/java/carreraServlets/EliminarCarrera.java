@@ -32,7 +32,8 @@ public class EliminarCarrera extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head>");
+            out.println("<head>"
+                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
             out.println("<title>Servlet EliminarCarrera</title>");
             out.println("</head>");
             out.println("<body>");

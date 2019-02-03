@@ -38,7 +38,8 @@ public class MostrarCarrera extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>"
-                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
+                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />"
+                    + "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
             out.println("<title>Servlet MostrarCarrera</title>");
             out.println("</head>");
             out.println("<body>");
@@ -72,8 +73,8 @@ public class MostrarCarrera extends HttpServlet {
                     out.println("<td>" + nombreCarrera + "</td>");
                     out.println("<td>" + descripcionCarrera + "</td>");
                     out.println("<td>" + duracionCarrera + "</td>");
-                    out.println("<td> <a href='EditarCarrera?id=" + idCarrera + "' > Editar </a> "
-                            + "<a href='EliminarCarrera?id=" + idCarrera + " '> Eliminar </a>"
+                    out.println("<td> <a href='EditarCarrera?id=" + idCarrera + "' > <i style=\"font-size:24px\" class=\"fa\">&#xf044;</i> </a> "
+                            + "<a href='EliminarCarrera?id=" + idCarrera + " '> <i style=\"font-size:24px\" class=\"fa\">&#xf014;</i> </a>"
                             + "</td>");
                     out.println("</tr>");
                 }

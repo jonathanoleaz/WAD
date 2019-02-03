@@ -51,8 +51,10 @@ public class Carrera implements Serializable{
 
     @Override
     public String toString() {
-        return "Carrera{" + "idcarrera=" + idcarrera + ", nombrecarrera=" + nombrecarrera + ", duracion=" + duracion + '}';
+        return "Carrera{" + "idcarrera=" + idcarrera + ", nombrecarrera=" + nombrecarrera + ", descripcion=" + descripcion + ", duracion=" + duracion + '}';
     }
+
+    
 
     public Carrera(int idcarrera, String nombrecarrera, String descripcion, int duracion) {
         this.idcarrera = idcarrera;

@@ -35,13 +35,13 @@ public class EditarCarrera extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=ISO-8859-1\"");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>"
-                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"./styles.css\"  />");
+            out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head>");
+            out.println("<head>"
+                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
             out.println("<title>Servlet VerCarrera</title>");
             out.println("</head>");
             out.println("<body>");
@@ -57,7 +57,7 @@ public class EditarCarrera extends HttpServlet {
                 Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (carrera != null) {
-                out.println("<form action=\"EditarCarrera\" method=\"post\">"
+                out.println("<form action=\"EditarCarrera\" method=\"post\" accept-charset=\"ISO-8859-1\">"
                         + "ID:                  <input type=\"number\" name=\"id\" value=\"" + carrera.getIdCarrera() + "\" > "
                         + "<br>Nombre carrera:  <input type=\"text\" name=\"nombre\" value=\"" + carrera.getNombreCarrera() + "\"> "
                         + "<br>Descripción carrera: <input type=\"text\" size=\"35\" name=\"descripcion\" value=\"" + carrera.getDescripcion() + "\">"
@@ -78,7 +78,8 @@ public class EditarCarrera extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head>");
+            out.println("<head>"
+                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
             out.println("<title>Servlet EditarCarrera</title>");
             out.println("</head>");
             out.println("<body>");
@@ -88,8 +89,8 @@ public class EditarCarrera extends HttpServlet {
             CarreraDAO dao = new CarreraDAO();
             String mensajeAMostrar = "";
             Carrera carrera = new Carrera();
-            System.out.println(java.util.Arrays.asList(request.getParameterNames()));
-            System.out.println(request.getParameterNames());
+            //System.out.println(java.util.Arrays.asList(request.getParameterNames()));
+            //System.out.println(request.getParameterNames());
             carrera.setIdCarrera(Integer.parseInt(request.getParameter("id")));
             carrera.setNombrecarrera(request.getParameter("nombre"));
             carrera.setDescripcion(request.getParameter("descripcion"));
@@ -101,6 +102,7 @@ public class EditarCarrera extends HttpServlet {
                 Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
                 mensajeAMostrar = "El Registro no se editó satisfactoriamente";
             }
+            System.out.println(carrera.toString());
             if (carrera != null) {
                 out.println("<div align='center'>");
                 out.println(mensajeAMostrar + "<br/><br/>");
