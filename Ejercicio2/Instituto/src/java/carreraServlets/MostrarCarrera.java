@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package carreraServlets;
 
 import java.io.IOException;
@@ -52,10 +47,10 @@ public class MostrarCarrera extends HttpServlet {
             out.println("<table align='center' border='1' width='60%'");
             out.println("<tr>");
             out.println("<th> Id Carrera </th>");
-            out.println("<th> Nombre Carrera </th>");
-            out.println("<th> Descripci&oacute;n Carrera </th>");
-            out.println("<th> Duraci&oacute;n Carrera </th>");
-            out.println("<th> Acciones </th>");
+            out.println("<th> Nombre </th>");
+            out.println("<th> Descripci&oacute;n </th>");
+            out.println("<th> Duraci&oacute;n </th>");
+            out.println("<th> Acción </th>");
             out.println("</tr>");
 
             CarreraDAO dao = new CarreraDAO();

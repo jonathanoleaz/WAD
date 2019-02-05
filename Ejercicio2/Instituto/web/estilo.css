@@ -5,7 +5,8 @@
 
 
 body {
-    background: Lavender;
+    background: #94c9a9;
+    
 }
 
 
@@ -17,33 +18,46 @@ img {
 }
 
 form {
-    display: inline-block;
+    text-align: left;
+    width: 40%;
+    display: block;
     padding: 1em;
     background: #f9f9f9;
     border: 1px solid #c1c1c1;
     margin: 2rem auto 0 auto;
     max-width: 1200px;
     padding: 1em;
-
+    background:  #c6ecae;
 }
 
 
 form input {
-    display: inline-block;
+    display: inline-table;
     background: #fff;
     border: 1px solid #9c9c9c;
     width: 150px;
 }
-form button {
-    display: inline-block;
-    background: lightgrey;
+input[type=text] {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+table input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    display: inline-table;
+    color: coral;
     padding: 0.7em;
     width: 150px;
     border: 0;
+    background-color: #4CAF50;
+    text-align:center;
 }
 
 form button:hover {
-    background: greenyellow;
+    background: tomato;
 }
 
 
@@ -57,9 +71,32 @@ input {
     margin-bottom: 0.5rem;
 }
 input:focus {
-    outline: 3px solid gold;
+    outline: 1.5px solid tomato;
 }
 
+table{
+  margin: 0 0 40px 0;
+  width: 70%;
+  margin-left:15%; 
+    margin-right:15%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  display: table;
+  background: #c6ecae;
 
 
+}
+
+table td {
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+  background-color: #d4eac8
+}
 
