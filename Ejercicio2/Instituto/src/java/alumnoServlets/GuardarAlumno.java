@@ -1,8 +1,9 @@
-package carreraServlets;
+package alumnoServlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -16,8 +17,8 @@ import objectAndDao.*;
  *
  * @author jonat
  */
-@WebServlet(name = "GuardarCarrera", urlPatterns = {"/GuardarCarrera"})
-public class GuardarCarrera extends HttpServlet {
+@WebServlet(name = "GuardarAlumno", urlPatterns = {"/GuardarAlumno"})
+public class GuardarAlumno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,30 +38,41 @@ public class GuardarCarrera extends HttpServlet {
             out.println("<html>");
             out.println("<head>"
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
-            out.println("<title>Servlet GuardarCarrera</title>");
+            out.println("<title>Servlet GuardarAlumno</title>");
             out.println("</head>");
             out.println("<body>");
 
-            out.println("<h3 align='center'>Datos de la Carrera</h3>");
+            out.println("<h3 align='center'>Datos de la Alumno</h3>");
 
-            CarreraDAO dao = new CarreraDAO();
-            Carrera carrera = new Carrera();
-            //carrera.setIdCarrera(Integer.parseInt(request.getParameter("id")));
+            AlumnoDAO dao = new AlumnoDAO();
+            Alumno alumno = new Alumno();
+            
+            CarreraDAO carDao = new CarreraDAO();
+            ArrayList<Carrera> carrerasTodas = carDao.readAll();
+            //alumno.setIdAlumno(Integer.parseInt(request.getParameter("id")));
             /*try {
-              //  carrera = dao.read(carrera.getIdCarrera());
+              //  alumno = dao.read(alumno.getIdAlumno());
             } catch (SQLException ex) {
-                //Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(VerAlumno.class.getName()).log(Level.SEVERE, null, ex);
             }*/
-            if (carrera != null) {
-                out.println("<form action=\"GuardarCarrera\" method=\"post\">"
-                        //+ "ID:                  <input type=\"number\" name=\"id\" value=\"" + carrera.getIdCarrera() + "\" > "
-                        + "<br>Nombre carrera:  <input type=\"text\" name=\"nombre\" value=nombre > "
-                        + "<br>Descripción carrera: <input type=\"text\" size=\"35\" name=\"descripcion\" value=descripción>"
-                        + "<br>Duración:            <input type=\"number\" name=\"duracion\" value=duracion>"
-                        + "<br><input type=\"submit\" value=\"Guardar\">"
+            if (alumno != null) {
+                out.println("<form action=\"EditarAlumno\" method=\"post\" accept-charset=\"ISO-8859-1\">"
+                        + "ID:                      <input type=\"number\" name=\"id\"          > "
+                        + "<br>Nombre:              <input type=\"text\"   name=\"nombre\"      > "
+                        + "<br>Ap. paterno:         <input type=\"text\"   name=\"paterno\"     > "
+                        + "<br>Ap. materno:         <input type=\"text\"   name=\"materno\"     > "
+                        + "<br>Domicilio:           <input type=\"text\"   name=\"domicilio\"   >"
+                        + "<br>Correo electrónico:  <input type=\"text\"   name=\"correo\"      >"
+                        +"<br>Carrera: "
+                        + "<select name=\"carrera\">\n");
+                                for(int i=0; i<carrerasTodas.size(); i++)
+                                {
+                                    out.println("<option value=\""+carrerasTodas.get(i).getIdCarrera()+"\">"+carrerasTodas.get(i).getDescripcion()+"</option>\n");
+                                }
+                        out.print("</select>"
+                        + "<br><input type=\"submit\" value=\"Modificar\">"
                         + "</form>");
             }
-            System.out.println(carrera.getDescripcion());
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,31 +86,43 @@ public class GuardarCarrera extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>"
-                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"./estilo.css\"  />");
-            out.println("<title>Servlet GuardarCarrera</title>");
+                    + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
+            out.println("<title>Servlet EditarAlumno</title>");
             out.println("</head>");
             out.println("<body>");
 
-            out.println("<h3 align='center'>Guardado de carrera</h3>");
+            out.println("<h3 align='center'>Modificación de alumno</h3>");
 
-            CarreraDAO dao = new CarreraDAO();
+            AlumnoDAO dao = new AlumnoDAO();
+            CarreraDAO carrDao = new CarreraDAO();
             String mensajeAMostrar = "";
-            Carrera carrera = new Carrera();         
-            //carrera.setIdCarrera(Integer.parseInt(request.getParameter("id")));
-            carrera.setNombrecarrera(request.getParameter("nombre"));
-            carrera.setDescripcion(request.getParameter("descripcion"));
-            carrera.setDuracion(Integer.parseInt(request.getParameter("duracion")));
+            Alumno alumno = new Alumno();
+            //System.out.println(java.util.Arrays.asList(request.getParameterNames()));
+            //System.out.println(request.getParameterNames());
+            System.out.println(">> "+request.getParameter("id"));
+            alumno.setNoboleta(Integer.parseInt(request.getParameter("id")));
+            
+            alumno.setNombre(request.getParameter("nombre"));
+            alumno.setMaterno(request.getParameter("materno"));
+            alumno.setPaterno(request.getParameter("paterno"));
+            alumno.setDomicilio(request.getParameter("domicilio"));
+            alumno.setEmail(request.getParameter("correo"));
+            alumno.setCarrera(carrDao.read(Integer.parseInt(request.getParameter("carrera"))));
+            //alumno.set(request.getParameter("nombre"));
+            //alumno.setDescripcion(request.getParameter("descripcion"));
+            //alumno.setDuracion(Integer.parseInt(request.getParameter("duracion")));
             try {
-                dao.create(carrera);
+                dao.update(alumno);
                 mensajeAMostrar = "El Registro se guardó satisfactoriamente";
             } catch (SQLException ex) {
-                Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(VerAlumno.class.getName()).log(Level.SEVERE, null, ex);
                 mensajeAMostrar = "El Registro no se guardó satisfactoriamente";
             }
-            if (carrera != null) {
+            System.out.println(alumno.toString());
+            if (alumno != null) {
                 out.println("<div align='center'>");
                 out.println(mensajeAMostrar + "<br/><br/>");
-                out.println("<a href='MostrarCarrera'> Lista de Carreras </a>");
+                out.println("<a href='MostrarAlumno'> Lista de Alumnos </a>");
                 out.println("</div>");
             }
 
@@ -122,7 +146,7 @@ public class GuardarCarrera extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerAlumno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -142,7 +166,7 @@ public class GuardarCarrera extends HttpServlet {
             System.out.println("ALOH");
             processPostRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerAlumno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -1,5 +1,6 @@
-package carreraServlets;
+package alumnoServlets;
 
+import alumnoServlets.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import objectAndDao.*;
 
-@WebServlet(name = "MostrarCarrera", urlPatterns = {"/MostrarCarrera"})
-public class MostrarCarrera extends HttpServlet {
+@WebServlet(name = "MostrarAlumno", urlPatterns = {"/MostrarAlumno"})
+public class MostrarAlumno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,55 +36,64 @@ public class MostrarCarrera extends HttpServlet {
             out.println("<head>"
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />"
                     + "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
-            out.println("<title>Servlet MostrarCarrera</title>");
+            out.println("<title>Servlet MostrarAlumno</title>");
             out.println("</head>");
             out.println("<body>");
 
-            String nombreCarrera, descripcionCarrera;
+            String nombre, apPaterno, apMaterno, domicilio, correo, carrera;
             String mensajeAMostrar = "";
-            int idCarrera, duracionCarrera;
+            int idAlumno, duracionAlumno;
 
-            out.println("<h3 align='center'>Lista de Carreras</h3>");
-            out.println("<table align='center' border='1' width='60%'");
+            out.println("<h3 align='center'>Lista de Alumnos</h3>");
+            out.println("<table>");
             out.println("<tr>");
             out.println("<th> Id</th>");
             out.println("<th> Nombre </th>");
-            out.println("<th> Descripci&oacute;n </th>");
-            out.println("<th> Duraci&oacute;n </th>");
+            out.println("<th> Ap. paterno</th>");
+            out.println("<th> Ap. materno </th>");
+            out.println("<th> Domicilio </th>");
+            out.println("<th> E-mail </th>");
+            out.println("<th> Carrera </th>");
             out.println("<th> Acción </th>");
             out.println("</tr>");
 
-            CarreraDAO dao = new CarreraDAO();
+            AlumnoDAO dao = new AlumnoDAO();
             try {
-                List<Carrera> lista = dao.readAll();
+                List<Alumno> lista = dao.readAll();
                 for (int i = 0; i < lista.size(); i++) {
-                    Carrera listaCarrera = (Carrera) lista.get(i);
-                    idCarrera = listaCarrera.getIdCarrera();
-                    nombreCarrera = listaCarrera.getNombreCarrera();
-                    descripcionCarrera = listaCarrera.getDescripcion();
-                    duracionCarrera = listaCarrera.getDuracion();
+                    Alumno listaAlumno = (Alumno) lista.get(i);
+                    idAlumno = listaAlumno.getNoboleta();
+                    nombre = listaAlumno.getNombre();
+                    apPaterno = listaAlumno.getPaterno();
+                    apMaterno = listaAlumno.getMaterno();
+                    domicilio = listaAlumno.getDomicilio();
+                    correo = listaAlumno.getEmail();
+                    carrera = listaAlumno.getCarrera().getNombreCarrera();
 
                     out.println("<tr>");
-                    out.println("<td><a href='VerCarrera?id=" + idCarrera + "' >" + idCarrera + "</a></td>");
-                    out.println("<td>" + nombreCarrera + "</td>");
-                    out.println("<td>" + descripcionCarrera + "</td>");
-                    out.println("<td>" + duracionCarrera + "</td>");
-                    out.println("<td> <a href='EditarCarrera?id=" + idCarrera + "' > <i style=\"font-size:24px\" class=\"fa\">&#xf044;</i> </a> "
-                            + "<a href='EliminarCarrera?id=" + idCarrera + " '> <i style=\"font-size:24px\" class=\"fa\">&#xf014;</i> </a>"
+                    out.println("<td><a href='VerAlumno?id=" + idAlumno + "' >" + idAlumno + "</a></td>");
+                    out.println("<td>" + nombre + "</td>");
+                    out.println("<td>" + apPaterno + "</td>");
+                    out.println("<td>" + apMaterno + "</td>");
+                    out.println("<td>" + domicilio + "</td>");
+                    out.println("<td>" + correo + "</td>");
+                    out.println("<td>" + carrera + "</td>");
+                    out.println("<td> <a href='EditarAlumno?id=" + idAlumno + "' > <i style=\"font-size:24px\" class=\"fa\">&#xf044;</i> </a> "
+                            + "<a href='EliminarAlumno?id=" + idAlumno + " '> <i style=\"font-size:24px\" class=\"fa\">&#xf014;</i> </a>"
                             + "</td>");
                     out.println("</tr>");
                 }
                 out.println("</table>");
 
                 out.println("<div align='center'>");
-                out.println("<a href='GuardarCarrera'> Agregar Carrera </a>");
+                out.println("<a href='GuardarAlumno'> Agregar Alumno </a>");
                 out.println("</div>");
             } catch (SQLException e) {
-                mensajeAMostrar = "No se pudó mostrar el listado de Carreras" + e.toString();
+                mensajeAMostrar = "No se pudó mostrar el listado de Alumnos" + e.toString();
                 out.println("<div align='center'>");
                 out.println(mensajeAMostrar + "<br/><br/>");
                 out.println("</div>");
-                Logger.getLogger(MostrarCarrera.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(MostrarAlumno.class.getName()).log(Level.SEVERE, null, e);
             }
             out.println("</body>");
             out.println("</html>");
@@ -105,7 +115,7 @@ public class MostrarCarrera extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(MostrarCarrera.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MostrarAlumno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -123,7 +133,7 @@ public class MostrarCarrera extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(MostrarCarrera.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MostrarAlumno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

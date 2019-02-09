@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class AlumnoDAO {
 
     private static final String SQL_INSERT = "INSERT INTO alumno(nombre, materno, paterno, domicilio, email, idcarrera)"
-            + "values (?, ?, ?)";
+            + "values (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE alumno SET nombre=?, materno=?, paterno=?, domicilio=?, email=?, idcarrera=? "
             + "where noboleta=?";
     private static final String SQL_DELETE = "DELETE FROM alumno where noboleta=?";
@@ -54,6 +54,7 @@ public class AlumnoDAO {
             ps.setString(4, c.getDomicilio());
             ps.setString(5, c.getEmail());
             ps.setInt(6, c.getCarrera().getIdCarrera());
+            ps.setInt(7, c.getNoboleta());
             ps.executeUpdate();
         } finally {
             if (ps != null) {

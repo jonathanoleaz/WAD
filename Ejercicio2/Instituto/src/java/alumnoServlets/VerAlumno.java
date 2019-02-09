@@ -1,5 +1,6 @@
-package carreraServlets;
+package alumnoServlets;
 
+import alumnoServlets.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,8 +17,8 @@ import objectAndDao.*;
  *
  * @author jonat
  */
-@WebServlet(name = "VerCarrera", urlPatterns = {"/VerCarrera"})
-public class VerCarrera extends HttpServlet {
+@WebServlet(name = "VerAlumno", urlPatterns = {"/VerAlumno"})
+public class VerAlumno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,38 +38,47 @@ public class VerCarrera extends HttpServlet {
             out.println("<html>");
             out.println("<head>"
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
-            out.println("<title>Servlet VerCarrera</title>");
+            out.println("<title>Servlet VerAlumno</title>");
             out.println("</head>");
             out.println("<body>");
 
-            out.println("<h3 align='center'>Datos de la Carrera</h3>");
+            out.println("<h3 align='center'>Datos de la Alumno</h3>");
             out.println("<table align='center' border='1' width='60%'");
-            CarreraDAO dao = new CarreraDAO();
-            Carrera carrera = new Carrera();
-            carrera.setIdCarrera(Integer.parseInt(request.getParameter("id")));
+            AlumnoDAO dao = new AlumnoDAO();
+            Alumno alumno = new Alumno();
+            alumno.setNoboleta(Integer.parseInt(request.getParameter("id")));
             try {
-                carrera = dao.read(carrera.getIdCarrera());
+                alumno = dao.read(alumno.getNoboleta());
             } catch (SQLException ex) {
-                Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(VerAlumno.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (carrera != null) {
+            if (alumno != null) {
                 out.println("<tr>");
-                out.println("<th> Id</th><td>" + carrera.getIdCarrera() + "</td>");
+                out.println("<th> Id</th><td>" + alumno.getNoboleta() + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
-                out.println("<th> Nombre Carrera </th><td>" + carrera.getNombreCarrera() + "</td>");
+                out.println("<th> Nombre</th><td>" + alumno.getNombre() + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
-                out.println("<th> Descripci&oacute;n </th><td>" + carrera.getDescripcion() + "</td>");
+                out.println("<th> Ap. paterno </th><td>" + alumno.getPaterno()+ "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
-                out.println("<th> Duraci&oacute;n </th><td>" + carrera.getDuracion() + "</td>");
+                out.println("<th> Ap. materno </th><td>" + alumno.getMaterno() + "</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<th> Domicilio </th><td>" + alumno.getDomicilio()+ "</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<th> E-mail </th><td>" + alumno.getEmail()+ "</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<th> Carrera </th><td>" + alumno.getCarrera().getDescripcion()+ "</td>");
                 out.println("</tr>");
                 out.println("</table>");
                 out.println("<div align='center'>");
-                out.println("<a href='EliminarCarrera?id=" + carrera.getIdCarrera() + " '> Eliminar Carrera </a>");
+                out.println("<a href='EliminarAlumno?id=" + alumno.getNoboleta() + " '> Eliminar Alumno </a>");
                 out.println("&nbsp; &nbsp; &nbsp;");
-                out.println("<a href='MostrarCarrera'> Lista de Carreras </a>");
+                out.println("<a href='MostrarAlumno'> Lista de Alumnos </a>");
                 out.println("</div>");
             }
 
@@ -92,7 +102,7 @@ public class VerCarrera extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerAlumno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -110,7 +120,7 @@ public class VerCarrera extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(VerCarrera.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerAlumno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

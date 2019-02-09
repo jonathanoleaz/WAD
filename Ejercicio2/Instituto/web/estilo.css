@@ -44,6 +44,20 @@ input[type=text] {
   box-sizing: border-box;
 }
 
+input[type=number] {
+  width: 25%;
+  padding: 12px 15px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+select {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
 table input[type="submit"] {
     display: block;
     margin: 0 auto;
@@ -70,20 +84,23 @@ input {
     padding: 0.7em;
     margin-bottom: 0.5rem;
 }
+
 input:focus {
     outline: 1.5px solid tomato;
 }
 
+select:focus {
+    outline: 2.5px solid tomato;
+}
+
 table{
-  margin: 0 0 40px 0;
-  width: 70%;
-  margin-left:15%; 
-    margin-right:15%;
+  margin: 0 0 0 0;
+  width: 80%;
+  margin-left:10%; 
+  margin-right:10%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   display: table;
   background: #c6ecae;
-
-
 }
 
 table td {
