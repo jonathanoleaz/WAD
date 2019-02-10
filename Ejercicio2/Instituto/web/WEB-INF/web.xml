@@ -12,6 +12,10 @@
         <servlet-name>EliminarCarrera</servlet-name>
         <servlet-class>carreraServlets.EliminarCarrera</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>iniciarSesion</servlet-name>
+        <servlet-class>logIn.iniciarSesion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MostrarCarrera</servlet-name>
         <url-pattern>/MostrarCarrera</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>EliminarCarrera</servlet-name>
         <url-pattern>/EliminarCarrera</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>iniciarSesion</servlet-name>
+        <url-pattern>/iniciarSesion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

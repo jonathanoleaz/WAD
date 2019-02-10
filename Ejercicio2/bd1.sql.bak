@@ -3,7 +3,7 @@ use instituto;
 
 create TABLE usuario(
 idusuario int not null auto_increment PRIMARY KEY,
-nombre_usuario VARCHAR(30) not null unique,
+nombre_usuario VARCHAR(30) not null,
 password CHAR(64) not null,
 tipo_usuario int default 1
 );

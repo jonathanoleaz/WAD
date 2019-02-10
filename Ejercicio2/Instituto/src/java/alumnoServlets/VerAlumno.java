@@ -40,7 +40,13 @@ public class VerAlumno extends HttpServlet {
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
             out.println("<title>Servlet VerAlumno</title>");
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body>"
+                    + "<ul>\n" +
+"    <li><a href=\"iniciarSesion\">Iniciar sesión</a></li>\n" +
+"    <li><a href=\"MostrarAlumno\">Alumno</a></li>\n" +
+"    <li><a href=\"MostrarCarrera\">Carrera</a></li>\n" +
+"\n" +
+"</ul>");
 
             out.println("<h3 align='center'>Datos de la Alumno</h3>");
             out.println("<table align='center' border='1' width='60%'");

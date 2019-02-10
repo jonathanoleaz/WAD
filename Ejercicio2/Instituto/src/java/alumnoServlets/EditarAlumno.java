@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import objectAndDao.*;
 
 /**
@@ -33,6 +34,11 @@ public class EditarAlumno extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=ISO-8859-1\"");
+        HttpSession session = request.getSession(true);
+        
+        if(session.getAttribute("nombreUsuario")==null)
+            response.sendRedirect("iniciarSesion");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -41,7 +47,13 @@ public class EditarAlumno extends HttpServlet {
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
             out.println("<title>Servlet VerAlumno</title>");
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body>"
+                    + "<ul>\n"
+                    + "    <li><a href=\"iniciarSesion\">Iniciar sesión</a></li>\n"
+                    + "    <li><a href=\"MostrarAlumno\">Alumno</a></li>\n"
+                    + "    <li><a href=\"MostrarCarrera\">Carrera</a></li>\n"
+                    + "\n"
+                    + "</ul>");
 
             out.println("<h3 align='center'>Datos del alumno</h3>");
 
@@ -63,13 +75,12 @@ public class EditarAlumno extends HttpServlet {
                         + "<br>Ap. materno:         <input type=\"text\"   name=\"materno\"     value=\"" + alumno.getMaterno() + "\"> "
                         + "<br>Domicilio:           <input type=\"text\"   name=\"domicilio\"   value=\"" + alumno.getDomicilio() + "\">"
                         + "<br>Correo electrónico:  <input type=\"text\"   name=\"correo\"    value=\"" + alumno.getEmail() + "\">"
-                        +"<br>Carrera: "
+                        + "<br>Carrera: "
                         + "<select name=\"carrera\">\n");
-                                for(int i=0; i<carrerasTodas.size(); i++)
-                                {
-                                    out.println("<option value=\""+carrerasTodas.get(i).getIdCarrera()+"\">"+carrerasTodas.get(i).getDescripcion()+"</option>\n");
-                                }
-                        out.print("</select>"
+                for (int i = 0; i < carrerasTodas.size(); i++) {
+                    out.println("<option value=\"" + carrerasTodas.get(i).getIdCarrera() + "\">" + carrerasTodas.get(i).getDescripcion() + "</option>\n");
+                }
+                out.print("</select>"
                         + "<br><input type=\"submit\" value=\"Modificar\">"
                         + "</form>");
             }
@@ -100,9 +111,9 @@ public class EditarAlumno extends HttpServlet {
             Alumno alumno = new Alumno();
             //System.out.println(java.util.Arrays.asList(request.getParameterNames()));
             //System.out.println(request.getParameterNames());
-            System.out.println(">> "+request.getParameter("id"));
+            System.out.println(">> " + request.getParameter("id"));
 //            alumno.setNoboleta(Integer.parseInt(request.getParameter("id")));
-            
+
             alumno.setNombre(request.getParameter("nombre"));
             alumno.setMaterno(request.getParameter("materno"));
             alumno.setPaterno(request.getParameter("paterno"));

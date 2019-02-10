@@ -5,8 +5,8 @@
 
 
 body {
-    background: #94c9a9;
-    
+    background: #e6ffe6;
+
 }
 
 
@@ -22,7 +22,7 @@ form {
     width: 40%;
     display: block;
     padding: 1em;
-    background: #f9f9f9;
+    background: #e3b5a4;
     border: 1px solid #c1c1c1;
     margin: 2rem auto 0 auto;
     max-width: 1200px;
@@ -38,24 +38,31 @@ form input {
     width: 150px;
 }
 input[type=text] {
-  width: 100%;
-  padding: 12px 15px;
-  margin: 5px 0;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 12px 15px;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+#user{
+    width: 30%;
+    padding: 12px 15px;
+    margin: 5px 0;
+    box-sizing: border-box;
+
 }
 
 input[type=number] {
-  width: 25%;
-  padding: 12px 15px;
-  margin: 5px 0;
-  box-sizing: border-box;
+    width: 25%;
+    padding: 12px 15px;
+    margin: 5px 0;
+    box-sizing: border-box;
 }
 
 select {
-  width: 100%;
-  padding: 12px 15px;
-  margin: 5px 0;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 12px 15px;
+    margin: 5px 0;
+    box-sizing: border-box;
 }
 
 table input[type="submit"] {
@@ -66,7 +73,7 @@ table input[type="submit"] {
     padding: 0.7em;
     width: 150px;
     border: 0;
-    background-color: #4CAF50;
+    background-color: #e5f9e0;
     text-align:center;
 }
 
@@ -94,26 +101,51 @@ select:focus {
 }
 
 table{
-  margin: 0 0 0 0;
-  width: 80%;
-  margin-left:10%; 
-  margin-right:10%;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  display: table;
-  background: #c6ecae;
+    margin: 0 0 0 0;
+    width: 80%;
+    margin-left:10%; 
+    margin-right:10%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    display: table;
+    background: #e5f9e0;
 }
 
 table td {
-  text-align: center;
+    text-align: center;
 }
 
 table th {
-  font-size: .85em;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
 }
 
 tr:nth-child(even) {
-  background-color: #d4eac8
+    background-color: #caffb9
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #40c9a2;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #035c41;
 }
 

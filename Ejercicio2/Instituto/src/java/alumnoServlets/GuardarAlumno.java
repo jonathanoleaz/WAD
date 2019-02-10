@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import objectAndDao.*;
 
 /**
@@ -32,6 +33,11 @@ public class GuardarAlumno extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession(true);
+        
+        if(session.getAttribute("nombreUsuario")==null)
+            response.sendRedirect("iniciarSesion");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -40,7 +46,13 @@ public class GuardarAlumno extends HttpServlet {
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />");
             out.println("<title>Servlet GuardarAlumno</title>");
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body>"
+                    + "<ul>\n" +
+"    <li><a href=\"iniciarSesion\">Iniciar sesión</a></li>\n" +
+"    <li><a href=\"MostrarAlumno\">Alumno</a></li>\n" +
+"    <li><a href=\"MostrarCarrera\">Carrera</a></li>\n" +
+"\n" +
+"</ul>");
 
             out.println("<h3 align='center'>Datos de la Alumno</h3>");
 
