@@ -10,7 +10,7 @@ tipo_usuario int default 1
 
 create TABLE carrera(
 idcarrera int not null auto_increment PRIMARY KEY,
-nombrecarrera VARCHAR(30) not null,
+nombrecarrera VARCHAR(30) not null UNIQUE,
 descripcion VARCHAR(30) not null,
 duracion int
 );
@@ -43,6 +43,18 @@ load data local infile 'C:/Users/jonat/Dropbox/WAD/Ejercicio2/carrera.csv' into 
  lines terminated by '\n'
  ignore 1 lines
  (nombre, materno, paterno, domicilio, email, idcarrera);
+ 
+ 
+DROP PROCEDURE if exists spAlumnosPorCarrera;
+delimiter $$
+
+create procedure spAlumnosPorCarrera ()
+	begin
+		SELECT count(*) as Alumnos, c.nombrecarrera as carrera from alumno a,
+		carrera c where a.idcarrera = c.idcarrera group by c.idcarrera order by Alumnos desc;
+	end$$
+	
+delimiter ;
 
 INSERT INTO carrera(nombrecarrera, descripcion, duracion) VALUES("DD", "DD", 5);
 

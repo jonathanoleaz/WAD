@@ -1,9 +1,13 @@
 package objectAndDao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +20,8 @@ public class AlumnoDAO {
     private static final String SQL_DELETE = "DELETE FROM alumno where noboleta=?";
     private static final String SQL_SELECT = "SELECT * FROM alumno where noboleta=?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM alumno";
+
+    private static final String SQL_DATOS = "{call spAlumnosPorCarrera()}";
 
     private Connection con;
 
@@ -140,12 +146,41 @@ public class AlumnoDAO {
         return carrerasFound;
     }
 
+    public ArrayList<Datos> getAlumnosEnCadaCarrera() throws SQLException {
+        Connection cn = null;
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        ArrayList<Datos> lista = new ArrayList();
+        try {
+            con = Conexion.getConexion();
+            cs = con.prepareCall(SQL_DATOS);
+            rs = cs.executeQuery();
+
+            while (rs.next()) {
+                Datos datos = new Datos();
+                datos.setValor(Integer.parseInt(rs.getString("Alumnos")));
+                datos.setAtributo(rs.getString("carrera"));
+                lista.add(datos);
+            }
+
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+
+        }
+        return lista;
+    }
+
     public static void main(String[] args) {
         AlumnoDAO cdao = new AlumnoDAO();
         try {
             //cdao.create(new Alumno(1, "ndnnd", "isc", 10));
-            
-            System.out.println(cdao.readAll());
+
+            System.out.println(cdao.getAlumnosEnCadaCarrera().get(1));
         } catch (Exception ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

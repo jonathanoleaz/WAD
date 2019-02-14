@@ -3,7 +3,7 @@ use instituto;
 
 create TABLE usuario(
 idusuario int not null auto_increment PRIMARY KEY,
-nombre_usuario VARCHAR(30) not null,
+nombre_usuario VARCHAR(30) not null unique,
 password CHAR(64) not null,
 tipo_usuario int default 1
 );
@@ -43,6 +43,18 @@ load data local infile 'C:/Users/jonat/Dropbox/WAD/Ejercicio2/carrera.csv' into 
  lines terminated by '\n'
  ignore 1 lines
  (nombre, materno, paterno, domicilio, email, idcarrera);
+ 
+ 
+DROP PROCEDURE if exists spAlumnosPorCarrera;
+delimiter $$
+
+create procedure spAlumnosPorCarrera ()
+	begin
+		SELECT count(*) as Alumnos, c.nombrecarrera as carrera from alumno a,
+		carrera c where a.idcarrera = c.idcarrera group by c.idcarrera order by Alumnos desc;
+	end$$
+	
+delimiter ;
 
 INSERT INTO carrera(nombrecarrera, descripcion, duracion) VALUES("DD", "DD", 5);
 

@@ -16,6 +16,14 @@
         <servlet-name>iniciarSesion</servlet-name>
         <servlet-class>logIn.iniciarSesion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>otraTarea.NewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AlumnosEnCadaCarrera</servlet-name>
+        <servlet-class>alumnoServlets.AlumnosEnCadaCarrera</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MostrarCarrera</servlet-name>
         <url-pattern>/MostrarCarrera</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>iniciarSesion</servlet-name>
         <url-pattern>/iniciarSesion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AlumnosEnCadaCarrera</servlet-name>
+        <url-pattern>/AlumnosEnCadaCarrera</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -41,7 +41,7 @@ public class MostrarAlumno extends HttpServlet {
             out.println("<head>"
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />"
                     + "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
-            out.println("<title>Servlet MostrarAlumno</title>");
+            out.println("<title>Servlet MostrarAlumno. "+session.getAttribute("nombreUsuario")+"</title>");
             out.println("</head>");
             out.println("<body>"
                     + "<ul>\n" +
@@ -55,7 +55,7 @@ public class MostrarAlumno extends HttpServlet {
             String mensajeAMostrar = "";
             int idAlumno, duracionAlumno;
 
-            out.println("<h3 align='center'>Lista de Alumnos</h3>");
+            out.println("<h3 align='center'>Lista de Alumnos "+session.getAttribute("nombreUsuario")+"</h3>");
             out.println("<table>");
             out.println("<tr>");
             out.println("<th> Id</th>");
