@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta charset="ISO-8859-1"> 
+        <title>Javascript Login Form Validation</title>
+        <!-- Include CSS File Here -->
+        <link rel="stylesheet" type="text/css" href="estilo.css"  />
+        <!-- Include JS File Here -->
+        <script src="js/newUser.js"></script>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="main">
+
+                <form id="form_id" method="post" name="myform" action="RegistrarUsuario">
+                    <label>Usuario :</label>
+                    <input type="text" name="nombre" id="nombre"/>
+                    <label>Contraseña :</label>
+                    <input type="password" name="password" id="password"/>
+                    <br>
+                    <label>Confime contraseña :</label>
+                    <input type="password" name="password2" id="password2"/>
+                    <br>
+                    Tipo de usuario: 
+                    <select name="carrera" id="carrera">
+                        <option value="1">1(root)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    
+                    <center>
+                        <input type="button" value="Registrarse" id="submitton" onClick="validate()"/>
+                    </center>
+                </form>
+
+
+            </div>
+        </div>
+    <center>
+        <a href="register">Registrarme</a>
+    </center>
+
+
+</body>
+</html>

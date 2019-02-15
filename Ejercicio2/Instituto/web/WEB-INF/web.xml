@@ -24,6 +24,14 @@
         <servlet-name>AlumnosEnCadaCarrera</servlet-name>
         <servlet-class>alumnoServlets.AlumnosEnCadaCarrera</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegistrarUsuario</servlet-name>
+        <servlet-class>logIn.RegistrarUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>iniciarSesionConJavaScript</servlet-name>
+        <servlet-class>logIn.iniciarSesionConJavaScript</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MostrarCarrera</servlet-name>
         <url-pattern>/MostrarCarrera</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>AlumnosEnCadaCarrera</servlet-name>
         <url-pattern>/AlumnosEnCadaCarrera</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistrarUsuario</servlet-name>
+        <url-pattern>/RegistrarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>iniciarSesionConJavaScript</servlet-name>
+        <url-pattern>/iniciarSesionConJavaScript</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

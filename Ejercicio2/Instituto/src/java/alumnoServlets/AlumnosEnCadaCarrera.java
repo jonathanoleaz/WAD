@@ -47,11 +47,11 @@ public class AlumnosEnCadaCarrera extends HttpServlet {
         AlumnoDAO dao = new AlumnoDAO();
         try {
             List datos = dao.getAlumnosEnCadaCarrera();
-            
+
             for (int i = 0; i < datos.size(); i++) {
                 Datos d = (Datos) datos.get(i);
                 pie.setValue(d.getAtributo(), d.getValor());
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(AlumnosEnCadaCarrera.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,9 +72,8 @@ public class AlumnosEnCadaCarrera extends HttpServlet {
         ServletContext context = request.getServletContext();
         String appPath = context.getRealPath("");
 
-
         System.out.println(appPath);
-        File f = new File(appPath+"/grafica.png");
+        File f = new File(appPath + "/grafica.png");
         ChartUtilities.saveChartAsPNG(f, chart, 1400, 800);
         /**
          * ***************
@@ -86,15 +85,15 @@ public class AlumnosEnCadaCarrera extends HttpServlet {
             out.println("<head>"
                     + "<link rel=\"stylesheet\" type=\"text/css\" href=\"estilo.css\"  />"
                     + "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
-                   
+
             out.println("<title>Estadísticas</title>");
             out.println("</head>");
-            out.println("<body>"+ "<ul>\n" +
-"    <li><a href=\"iniciarSesion\">Iniciar sesión</a></li>\n" +
-"    <li><a href=\"MostrarAlumno\">Alumno</a></li>\n" +
-"    <li><a href=\"MostrarCarrera\">Carrera</a></li>\n" +
-"\n" +
-"</ul>");
+            out.println("<body>" + "<ul>\n"
+                    + "    <li><a href=\"iniciarSesion\">Iniciar sesión</a></li>\n"
+                    + "    <li><a href=\"MostrarAlumno\">Alumno</a></li>\n"
+                    + "    <li><a href=\"MostrarCarrera\">Carrera</a></li>\n"
+                    + "\n"
+                    + "</ul>");
             out.println("<img src=\"grafica.png\" alt=\"GraficoAlumnosByCarrera\" style=\"width:1000px;height:600px;\">");
             out.println("</body>");
             out.println("</html>");

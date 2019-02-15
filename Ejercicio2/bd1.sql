@@ -50,7 +50,7 @@ delimiter $$
 
 create procedure spAlumnosPorCarrera ()
 	begin
-		SELECT count(*) as Alumnos, c.nombrecarrera as carrera from alumno a,
+		SELECT count(*) as Alumnos, c.descripcion as carrera from alumno a,
 		carrera c where a.idcarrera = c.idcarrera group by c.idcarrera order by Alumnos desc;
 	end$$
 	
@@ -63,3 +63,5 @@ DELETE FROM carrera WHERE idcarrera=1;
 
 UPDATE carrera SET nombrecarrera='', descripcion='', duracion='' WHERE idcarrera=4;
 
+DELETE u1 FROM carrera u1, carrera u2 
+WHERE u1.idcarrera < u2.idcarrera AND u1.nombrecarrera = u2.nombrecarrera;

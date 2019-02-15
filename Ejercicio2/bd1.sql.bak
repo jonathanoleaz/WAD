@@ -10,7 +10,7 @@ tipo_usuario int default 1
 
 create TABLE carrera(
 idcarrera int not null auto_increment PRIMARY KEY,
-nombrecarrera VARCHAR(30) not null,
+nombrecarrera VARCHAR(30) not null UNIQUE,
 descripcion VARCHAR(30) not null,
 duracion int
 );
