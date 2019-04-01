@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logIn;
 
 import java.io.IOException;
@@ -17,10 +12,6 @@ import javax.servlet.http.HttpSession;
 import objectAndDao.Usuario;
 import objectAndDao.UsuarioDAO;
 
-/**
- *
- * @author jonat
- */
 public class iniciarSesion extends HttpServlet {
 
     /**
@@ -96,15 +87,6 @@ public class iniciarSesion extends HttpServlet {
 
             }
 
-            /*if (session.isNew()) {
-                title = "Welcome to my website";
-                session.setAttribute(userIDKey, userID);
-            } else {
-                visitCount = (Integer) session.getAttribute(visitCountKey);
-                visitCount = visitCount + 1;
-                userID = (String) session.getAttribute(userIDKey);
-            }
-            session.setAttribute(visitCountKey, visitCount);*/
         }
     }
 

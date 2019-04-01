@@ -1,18 +1,30 @@
-package logIn;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Tiendita;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import objectAndDao.Usuario;
-import objectAndDao.UsuarioDAO;
+import DAO.Conexion;
+import java.io.File;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletOutputStream;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 
-public class iniciarSesionConJavaScript extends HttpServlet {
+/**
+ *
+ * @author jonat
+ */
+public class ServletReportePDF extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -25,41 +37,7 @@ public class iniciarSesionConJavaScript extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        
-    }
-
-    protected void processPostRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
-        System.out.println("frio");
-        /* TODO output your page here. You may use following sample code. */
-        Usuario user = new Usuario();
-        UsuarioDAO userDao = new UsuarioDAO();
-        String mensajeMostrar = "Sesion NO iniciada";
-
-        user = userDao.readByNombre(request.getParameter("nombre"));
-        if (user.getNombreUsuario() == null) {
-            System.out.println("ddddd");
-            response.sendRedirect("iniciarSesion");
-            return;
-        }
-        Boolean coincidencia;
-        coincidencia = UsuarioDAO.checkPass(request.getParameter("password"), user.getPassword());
-        System.out.println(">>" + coincidencia);
-        if (coincidencia) {
-
-            mensajeMostrar = "Sesión iniciada";
-            session.setAttribute("nombreUsuario", user.getNombreUsuario());
-            session.setAttribute("idUsuario", user.getIdusuario());
-            response.sendRedirect("MostrarAlumno");
-        } else {
-            response.sendRedirect("iniciarSesion");
-
-        }
-
+        generarPDF(response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,11 +66,7 @@ public class iniciarSesionConJavaScript extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processPostRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(iniciarSesionConJavaScript.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -104,5 +78,31 @@ public class iniciarSesionConJavaScript extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private void generarPDF(HttpServletResponse response){
+
+        ServletOutputStream sos=null;
+        try {
+            Connection cn= Conexion.getConexion();
+            sos = response.getOutputStream();
+            System.out.println(getServletConfig().getServletContext().getRealPath(""));
+            File archivo=new File(getServletConfig().getServletContext().getRealPath("/Reportes/Articulos1.jasper"));
+            byte[] bytes=null;
+            bytes=JasperRunManager.runReportToPdf(archivo.getPath(), null, cn);
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            sos.write(bytes, 0, bytes.length);
+            sos.flush();
+            sos.close();
+            
+        }  catch (JRException ex) {
+            Logger.getLogger(ServletReportePDF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ServletReportePDF.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        
+        
+    }
 
 }

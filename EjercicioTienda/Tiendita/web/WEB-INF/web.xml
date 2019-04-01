@@ -4,9 +4,33 @@
         <servlet-name>CategoriaServlet</servlet-name>
         <servlet-class>Tiendita.CategoriaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ArticuloServlet</servlet-name>
+        <servlet-class>Tiendita.ArticuloServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductosPorCategoria</servlet-name>
+        <servlet-class>Tiendita.ProductosPorCategoria</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletReportePDF</servlet-name>
+        <servlet-class>Tiendita.ServletReportePDF</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CategoriaServlet</servlet-name>
         <url-pattern>/CategoriaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ArticuloServlet</servlet-name>
+        <url-pattern>/ArticuloServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductosPorCategoria</servlet-name>
+        <url-pattern>/ProductosPorCategoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletReportePDF</servlet-name>
+        <url-pattern>/ServletReportePDF</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

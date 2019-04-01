@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +19,7 @@ public class AlumnoDAO {
     private static final String SQL_SELECT = "SELECT * FROM alumno where noboleta=?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM alumno";
 
-    private static final String SQL_DATOS = "{call spAlumnosPorCarrera()}";
+    private static final String SQL_DATOS = "{call ProductosPorCategoria()}";
 
     private Connection con;
 

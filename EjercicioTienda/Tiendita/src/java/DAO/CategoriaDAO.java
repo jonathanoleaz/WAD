@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class CategoriaDAO {
     private static final String SQL_INSERT = "INSERT INTO categoria(nombrecategoria, descripcioncategoria)"
             + "values (?, ?)";
-    private static final String SQL_UPDATE = "UPDATE alumno SET nombrecategoria=?, descripcioncategoria=? where noboleta=?";
+    private static final String SQL_UPDATE = "UPDATE categoria SET nombrecategoria=?, descripcioncategoria=? where idcategoria=?";
     private static final String SQL_DELETE = "DELETE FROM categoria where idcategoria=?";
-    private static final String SQL_SELECT = "SELECT * FROM categoria where nombrecategoria=?";
+    private static final String SQL_SELECT = "SELECT * FROM categoria where idcategoria=?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM categoria";
 
     private static final String SQL_DATOS = "{call spProductosPorcategoria()}";
@@ -50,6 +50,7 @@ public class CategoriaDAO {
             ps = con.prepareStatement(SQL_UPDATE);
             ps.setString(1, c.getNombreCategoria());
             ps.setString(2, c.getDescripcionCategoria());
+            ps.setInt(3, c.getIdcategoria());
             ps.executeUpdate();
         } finally {
             if (ps != null) {
@@ -126,7 +127,7 @@ public class CategoriaDAO {
         return categoriasFound;
     }
 
-    public ArrayList<Datos> getCategoriasEnCadaCarrera() throws SQLException {
+    public ArrayList<Datos> getProductosEnCadaCategoria() throws SQLException {
         Connection cn = null;
         CallableStatement cs = null;
         ResultSet rs = null;

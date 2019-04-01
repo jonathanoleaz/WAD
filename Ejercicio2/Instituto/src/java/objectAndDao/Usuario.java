@@ -1,7 +1,5 @@
 package objectAndDao;
-
 import java.io.Serializable;
-
 public class Usuario implements Serializable{
     private int idusuario;
     private String nombreUsuario;
@@ -49,14 +47,8 @@ public class Usuario implements Serializable{
 
     public Usuario() {
     }
-
     @Override
     public String toString() {
         return "Usuario{" + "idusuario=" + idusuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password + ", tipoUsuario=" + tipoUsuario + '}';
-    }
-    
-    
-    
-    
-    
+    }   
 }

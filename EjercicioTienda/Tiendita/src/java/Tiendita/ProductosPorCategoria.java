@@ -1,4 +1,4 @@
-package alumnoServlets;
+package Tiendita;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,21 +13,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import objectAndDao.AlumnoDAO;
-import objectAndDao.Datos;
+import DAO.ArticuloDAO;
+import DAO.Datos;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
-public class AlumnosEnCadaCarrera extends HttpServlet {
+public class ProductosPorCategoria extends HttpServlet {
 
     private DefaultPieDataset getGraficaAlumnos() {
         DefaultPieDataset pie = new DefaultPieDataset();
 
-        AlumnoDAO dao = new AlumnoDAO();
+        ArticuloDAO dao = new ArticuloDAO();
         try {
-            List datos = dao.getAlumnosEnCadaCarrera();
+            List datos = dao.getArticulosEnCadaCategoria();
 
             for (int i = 0; i < datos.size(); i++) {
                 Datos d = (Datos) datos.get(i);
@@ -35,7 +35,7 @@ public class AlumnosEnCadaCarrera extends HttpServlet {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnosEnCadaCarrera.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return pie;
     }
@@ -44,7 +44,7 @@ public class AlumnosEnCadaCarrera extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        JFreeChart chart = ChartFactory.createPieChart("Alumnos by carrera", getGraficaAlumnos(), true, true, Locale.getDefault());
+        JFreeChart chart = ChartFactory.createPieChart("Productos by categoría", getGraficaAlumnos(), true, true, Locale.getDefault());
         String archivo = getServletConfig().getServletContext().getRealPath("grafica.png");
 
         ServletContext context = request.getServletContext();

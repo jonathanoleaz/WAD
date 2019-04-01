@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class ArticuloDAO {
     private static final String SQL_INSERT = "INSERT INTO articulo(clavearticulo, nombreproducto, descripcionproducto, "
             + "precio, existencia, idcategoria)"
-            + "values (?, ?)";
+            + "values (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE articulo SET nombreproducto=?, descripcionproducto=?, precio=?, existencia=?, idcategoria=? where clavearticulo=?";
     private static final String SQL_DELETE = "DELETE FROM articulo where clavearticulo=?";
     private static final String SQL_SELECT = "SELECT * FROM articulo where clavearticulo=?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM articulo";
 
-    private static final String SQL_DATOS = "{call spProductosPorcategoria()}";
+    private static final String SQL_DATOS = "{call ProductosPorCategoria()}";
 
     private Connection con;
 
@@ -49,13 +49,14 @@ public class ArticuloDAO {
         PreparedStatement ps = null;
         try {
             con = Conexion.getConexion();
-            ps = con.prepareStatement(SQL_INSERT);
+            ps = con.prepareStatement(SQL_UPDATE);
             
-            ps.setString(1, c.getNombreproducto());
-            ps.setString(2, c.getDescripcionproducto());
-            ps.setDouble(3, c.getPrecio());
-            ps.setInt(4, c.getExistencia());
-            ps.setInt(5, c.getIdcategoria());
+            ps.setString(1, c.getClavearticulo());
+            ps.setString(2, c.getNombreproducto());
+            ps.setString(3, c.getDescripcionproducto());
+            ps.setDouble(4, c.getPrecio());
+            ps.setInt(5, c.getExistencia());
+            ps.setInt(6, c.getIdcategoria());
             
             ps.setString(6, c.getClavearticulo());
             
@@ -81,7 +82,7 @@ public class ArticuloDAO {
         }
     }
 
-    public Articulo read(int id) throws Exception {
+    public Articulo read(String clave) throws Exception {
         PreparedStatement ps = null;
         Boolean respuesta;
         Articulo cr = new Articulo();
@@ -90,7 +91,7 @@ public class ArticuloDAO {
         try {
             con = Conexion.getConexion();
             ps = con.prepareStatement(SQL_SELECT);
-            ps.setInt(1, id);
+            ps.setString(1, clave);
             rs1 = ps.executeQuery();
             while (rs1.next()) {
                 cr.setClavearticulo(rs1.getString(1));
@@ -154,8 +155,8 @@ public class ArticuloDAO {
 
             while (rs.next()) {
                 Datos datos = new Datos();
-                datos.setValor(Integer.parseInt(rs.getString("Articulos")));
-                datos.setAtributo(rs.getString("carrera"));
+                datos.setValor(Integer.parseInt(rs.getString("Productos")));
+                datos.setAtributo(rs.getString("categoria"));
                 lista.add(datos);
             }
 
