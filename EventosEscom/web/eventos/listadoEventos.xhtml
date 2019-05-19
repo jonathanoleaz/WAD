@@ -1,0 +1,104 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>
+            Listado de Eventos
+        </title>
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
+    </h:head>
+    <h:body>
+
+        <center>
+            <p:panel header="Listado de Eventos"
+                     style="text-align: left;width: 950px;
+                     vertical-align: middle;">
+                <f:view>
+                    <h:form id="frmEvento">                        
+                        <p:dataTable value="#{EventoBean.getLista()}"
+                                     var="evento"
+                                     style="font-size:12px"
+                                     paginator="true"
+                                     rows="5"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="idEvento"/>
+                                </f:facet>
+                                <h:outputText value="#{evento.getEntidad().idEvento}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{evento.getEntidad().nombreEvento}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Inicio"/>
+                                </f:facet>
+                                <h:outputText value="#{evento.getEntidad().inicio}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fin"/>
+                                </f:facet>
+                                <h:outputText value="#{evento.getEntidad().fin}"/>
+                            </p:column>
+                            <p:column style="width:150px;">
+                                <f:facet name="header">
+                                    <h:outputText value="Observaciones"/>
+                                </f:facet>
+
+                                <h:outputText value="#{evento.getEntidad().observaciones}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones"/>
+                                </f:facet>
+                                <p:commandButton
+                                    action="#{EventoBean.editar()}"
+                                    value="Editar"
+                                    immediate="true"                                    
+                                    actionListener="#{EventoBean.seleccionaEvento}"
+                                    ajax="false"
+                                    image="ui-icon ui-icon-pencil"
+                                    >
+                                    <f:param
+                                        name="claveArtSel"
+                                        value="#{evento.getEntidad().idEvento}" />
+                                </p:commandButton>
+                                <p:commandButton
+                                    action="kd"
+                                    value="Eliminar"
+                                    immediate="true"
+                                    actionListener="xf"
+                                    ajax="false"
+                                    image="ui-icon ui-icon-trash"
+                                    >
+                                    <f:param
+                                        name="claveArtSel"
+                                        value="dd" />
+                                </p:commandButton>
+
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:commandButton
+                            value="Nuevo"
+                            action="#{EventoBean.nuevo}"
+                            ajax="false"
+                            image="ui-icon ui-icon-disk"/>
+
+                        <p:commandButton value="Gráfica" action="grafica"  ajax="false"/>
+                        <p:commandButton value="Menu" action="menu"  ajax="false"/>
+                    </h:form>
+                </f:view>
+            </p:panel>
+        </center>
+    </h:body>
+</html>

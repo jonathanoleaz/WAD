@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="newcss.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Lista de articulos</title>
     </head>
@@ -29,13 +30,13 @@
                     <td><c:out value="${articulo.descripcion}"/></td>
                     <td><c:out value="${articulo.precio}"/></td>
                     <td><c:out value="${articulo.existencia}"/></td>
-                    <td><c:out value="${articulo.idcategoria.descripcion}"/></td>
+                    <td><c:out value="${articulo.categoria.descripcion}"/></td>
                     <td><a href="CarreraServlet?accion=eliminar&id=${articulo.claveart} ">Eliminar</a></td>
                     <td><a href="CarreraServlet?accion=actualizar&id=${articulo.claveart} ">Actualizar</a></td>
                 </tr>
             </c:forEach>
 
         </table>
-        <a href="CarreraForm.jsp">Nueva carrera</a>
+        <a href="ArticuloForm.jsp">Nuevo</a>
     </body>
 </html>

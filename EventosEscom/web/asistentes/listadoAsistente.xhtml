@@ -1,0 +1,119 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>
+            Listado de Asistentes
+        </title>
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
+    </h:head>
+    <h:body>
+        <center>
+            <p:panel header="Listado de Asistentes"
+                     style="text-align: left;width: 950px;
+                     vertical-align: middle;">
+                <f:view>
+                    <h:form id="frmAsistente">                        
+                        <p:dataTable value="#{AsistenteBean.getLista()}"
+                                     var="asistente"
+                                     style="font-size:12px"
+                                     paginator="true"
+                                     rows="5"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="idAsistente"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().idAsistente}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().nombreAsistente}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Ap. Paterno"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().paternoAsistente}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Ap. Materno"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().maternoAsistente}"/>
+                            </p:column>
+                            <p:column style="width:150px;">
+                                <f:facet name="header">
+                                    <h:outputText value="Email"/>
+                                </f:facet>
+                                
+                                <h:outputText value="#{asistente.getEntidad().emailAsistente}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Semestre"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().semestre}"/>
+                               
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Activo"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().activo}"/>
+                               
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones"/>
+                                </f:facet>
+                                <p:commandButton
+                                    action="#{AsistenteBean.editar()}"
+                                    value="Editar"
+                                    immediate="true"                                    
+                                    actionListener="#{AsistenteBean.seleccionaAsistente}"
+                                    ajax="false"
+                                    image="ui-icon ui-icon-pencil"
+                                    >
+                                    <f:param
+                                        name="claveArtSel"
+                                        value="#{asistente.getEntidad().idAsistente}" />
+                                </p:commandButton>
+                                <p:commandButton
+                                    action="#{AsistenteBean.borrar()}"
+                                    value="Eliminar"
+                                    immediate="true"
+                                    actionListener="#{AsistenteBean.seleccionaAsistente}"
+                                    ajax="false"
+                                    image="ui-icon ui-icon-trash"
+                                    >
+                                    <f:param
+                                        name="claveArtSel"
+                                        value="#{asistente.getEntidad().idAsistente}" />
+                                </p:commandButton>
+
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:commandButton
+                            value="Nuevo"
+                            action="#{AsistenteBean.nuevo}"
+                            ajax="false"
+                            image="ui-icon ui-icon-disk"/>
+
+                        <p:commandButton value="Gráfica" action="grafica"  ajax="false"/>
+                        <p:commandButton value="Menu" action="menu"  ajax="false"/>
+                        <p:commandButton value="Ver eventos" action="/eventos/listadoEventos.xhtml"  ajax="false"/>
+                    </h:form>
+                </f:view>
+            </p:panel>
+        </center>
+    </h:body>
+</html>

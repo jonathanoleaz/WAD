@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>
+            Formulario de Articulos
+        </title>
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
+    </h:head>
+    <h:body>
+        <center>
+            <p:panel header="Formulario de Articulo"
+                     style="text-align: left;width: 400px;
+                     vertical-align: middle;">
+                <f:view>
+                    <h:form id="frmArticulo">
+                        <h:inputHidden id="accion" value="#{ArticuloBean.accion}"/>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="claveArticulo"/>
+                            <p:inputText id="matricula" value="#{ArticuloBean.claveArticulo}"/>
+                            <h:outputText value="Descripcion"/>
+                            <p:inputText id="nombre" value="#{ArticuloBean.descripcion}"/>
+                            <h:outputText value="precio"/>
+                            <p:inputText id="precio" value="#{ArticuloBean.precio}"/>
+                            <h:outputText value="existencia"/>
+                            <p:inputText id="existencia" value="#{ArticuloBean.existencias}" />
+                            <p:commandButton
+                                value="Guardar"
+                                action="#{ArticuloBean.crear}"
+                                rendered="#{ArticuloBean.modoCrear}"
+                                ajax="false"
+                                image="ui-icon ui-icon-disk"
+                                />
+                            <p:commandButton
+                                value="Guardar"
+                                action="#{ArticuloBean.actualizar}"
+                                rendered="#{ArticuloBean.modoActualizar}"
+                                ajax="false"
+                                image="ui-icon ui-icon-disk"/>
+
+                            <p:commandButton
+                                value="Regresar"
+                                action="/articulos/listadoArticulo.xhtml"
+                                ajax="false"
+                                image="ui-icon ui-icon-arrow-1-w"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </p:panel>
+        </center>
+    </h:body>
+</html>

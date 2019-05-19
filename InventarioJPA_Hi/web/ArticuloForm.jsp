@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="newcss.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Formulario de articulo</title>
     </head>

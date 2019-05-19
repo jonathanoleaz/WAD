@@ -1,28 +1,26 @@
 package Servlets;
 
-import Controllers.*;
-import com.mycompany.inventariojpa_m.*;
+import entities.Categoria;
+import entities.NewHibernateUtil;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
  * @author jonat
  */
-public class ArticuloServlet extends HttpServlet {
-    
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("InventarioJP");
-    private EntityManager em = emf.createEntityManager();
+public class CategoriaServlet extends HttpServlet {
+
+    Session session = NewHibernateUtil.getSessionFactory().getCurrentSession();
+    Transaction tx = session.beginTransaction();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
@@ -30,26 +28,28 @@ public class ArticuloServlet extends HttpServlet {
         String action = request.getParameter("accion");
         System.out.println(action);
         String id = request.getParameter("id");
-        System.out.println("id:"+id);
-        
-        if (action.equals("lista")) {
-            System.out.println("nananana");
-            listado(request, response);
-        } else {
-            if (action.equals("nueva")) {
-                agregar(request, response);
+        System.out.println("id:" + id);
+
+        if (action != null) {
+            if (action.equals("lista")) {
+                System.out.println("nananana");
+                listado(request, response);
             } else {
-                if (action.equals("eliminar")) {
-                    eliminar(request, response);
+                if (action.equals("nueva")) {
+                    agregar(request, response);
                 } else {
-                    if (action.equals("actualizar")) {
-                        actualizar(request, response);
-                    } else if (action.equals("guardar")) {
-                        almacenar(request, response);
+                    if (action.equals("eliminar")) {
+                        eliminar(request, response);
+                    } else {
+                        if (action.equals("actualizar")) {
+                            actualizar(request, response);
+                        } else if (action.equals("guardar")) {
+                            almacenar(request, response);
+                        }
                     }
                 }
             }
-        }
+        } 
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ArticuloServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ArticuloServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -76,7 +76,7 @@ public class ArticuloServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ArticuloServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -90,100 +90,94 @@ public class ArticuloServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 /**/
+
     private void listado(HttpServletRequest request, HttpServletResponse response) {
         try {
             System.out.println("nada");
-            ArticuloJpaController dao = new ArticuloJpaController(emf);
+
             
-            System.out.println("dd:"+Arrays.toString(dao.findArticuloEntities().toArray()));
-            
-            request.setAttribute("lista", dao.findArticuloEntities());
-            RequestDispatcher vista = request.getRequestDispatcher("ArticuloLista.jsp");
+
+            session.createQuery("from Categoria");
+
+            request.setAttribute("lista", session.createQuery("from Categoria").list());
+            RequestDispatcher vista = request.getRequestDispatcher("CategoriaLista.jsp");
             vista.forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ArticuloServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void agregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
         almacenar(request, response);
-        RequestDispatcher vista = request.getRequestDispatcher("ArticuloForm.jsp");
+        RequestDispatcher vista = request.getRequestDispatcher("CategoriaForm.jsp");
         vista.forward(request, response);
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ArticuloJpaController dao = new ArticuloJpaController(emf);
-        Articulo c = new Articulo();
+
+        Categoria c = new Categoria();
         String id = request.getParameter("id");
-        c.setClaveart(Integer.parseInt(id));
-        c = dao.findArticulo(c.getClaveart());
-        dao.destroy(c.getClaveart());
+        c.setIdcategoria(Integer.parseInt(id));
+        c = (Categoria) session.get(Categoria.class, c);
+        session.delete(c);
         listado(request, response);
 
     }
 
     private void actualizar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ArticuloJpaController dao = new ArticuloJpaController(emf);
-        Articulo c = new Articulo();
+
+        Categoria c = new Categoria();
         String id = request.getParameter("id");
-        System.out.println("id:"+id);
-        c.setClaveart(Integer.parseInt(id));
-        c = dao.findArticulo(c.getClaveart());
+        System.out.println("id:" + id);
+        c.setIdcategoria(Integer.parseInt(id));
+        c = (Categoria) session.get(Categoria.class, c);
         System.out.println(c.toString());
         request.setAttribute("articulo", c);
-        
-        //almacenarArticulo(request, response);
-        RequestDispatcher vista = request.getRequestDispatcher("ArticuloForm.jsp");
+
+        //almacenarCategoria(request, response);
+        RequestDispatcher vista = request.getRequestDispatcher("CategoriaForm.jsp");
         vista.forward(request, response);
 
     }
 
-    private void almacenar(HttpServletRequest request, HttpServletResponse response){
+    private void almacenar(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Guardando carrera");
-        Articulo c = new Articulo();
-        ArticuloJpaController d = new ArticuloJpaController(emf);
-        
+        Categoria c = new Categoria();
+
         Categoria cat = new Categoria();
-        CategoriaJpaController catDao=new CategoriaJpaController(emf);
-        
-        if (request.getParameter("id") == null || request.getParameter("id").isEmpty()) {            
+
+        if (request.getParameter("id") == null || request.getParameter("id").isEmpty()) {
             try {
                 System.out.println("se crea");
 //                c.setIdcarrera(Integer.parseInt(request.getParameter("txtID")));
                 c.setDescripcion(request.getParameter("txtDescripcion"));
-                c.setExistencia(Integer.parseInt(request.getParameter("txtExistencia")));
-                c.setPrecio(Integer.parseInt(request.getParameter("txtPrecio")));
                 
-                cat=catDao.findCategoria(Integer.parseInt(request.getParameter("txtCategoria")));
-                c.setIdcategoria(cat);
-                
-                d.create(c);
+
+                session.save(c);
                 listado(request, response);
             } catch (Exception ex) {
                 try {
                     ex.printStackTrace();
                     response.sendRedirect("Error.html");
                 } catch (IOException ex1) {
-                    Logger.getLogger(ArticuloServlet.class.getName()).log(Level.SEVERE, null, ex1);
+                    Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             }
         } else {
             try {
                 System.out.println("se actualiza");
-                
-                c.setClaveart(Integer.parseInt(request.getParameter("id")));
+
+                c.setIdcategoria(Integer.parseInt(request.getParameter("id")));
                 c.setDescripcion(request.getParameter("txtDescripcion"));
-                c.setExistencia(Integer.parseInt(request.getParameter("txtExistencia")));
-                c.setPrecio(Integer.parseInt(request.getParameter("txtPrecio")));
-                d.edit(c);
+                session.save(c);
                 listado(request, response);
-                
+
             } catch (Exception ex) {
                 try {
                     ex.printStackTrace();
                     response.sendRedirect("Error.html");
                 } catch (IOException ex1) {
-                    Logger.getLogger(ArticuloServlet.class.getName()).log(Level.SEVERE, null, ex1);
+                    Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             }
         }

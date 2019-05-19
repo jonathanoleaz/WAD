@@ -5,20 +5,31 @@
         <servlet-class>Servlets.ArticuloServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LlenaCategoria</servlet-name>
-        <servlet-class>Servlets.LlenaCategoria</servlet-class>
+        <servlet-name>LlenarCategorias</servlet-name>
+        <servlet-class>Servlets.LlenarCategorias</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoriaServlet</servlet-name>
+        <servlet-class>Servlets.CategoriaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ArticuloServlet</servlet-name>
         <url-pattern>/ArticuloServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LlenaCategoria</servlet-name>
-        <url-pattern>/LlenaCategoria</url-pattern>
+        <servlet-name>LlenarCategorias</servlet-name>
+        <url-pattern>/LlenarCategorias</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoriaServlet</servlet-name>
+        <url-pattern>/CategoriaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 </web-app>

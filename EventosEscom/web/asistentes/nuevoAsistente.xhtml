@@ -1,0 +1,66 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>
+            Formulario de nuevo asistente
+        </title>
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
+    </h:head>
+    <h:body>
+        <center>
+            <p:panel header="Formulario de Asistente"
+                     style="text-align: left;width: 400px;
+                     vertical-align: middle;">
+                <f:view>
+                    <h:form id="frmAsistente">
+                        <h:inputHidden id="accion" value="#{AsistenteBean.accion}"/>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="ID asistente"/>
+                            <p:inputText id="idAsistente" value="#{AsistenteBean.idAsistente}"/>
+                            <h:outputText value="Nombre"/>
+                            <p:inputText id="nombre" value="#{AsistenteBean.nombre}"/>
+                            <h:outputText value="Paterno"/>
+                            <p:inputText id="paterno" value="#{AsistenteBean.paterno}"/>
+                            <h:outputText value="Materno"/>
+                            <p:inputText id="materno" value="#{AsistenteBean.materno}"/>
+                            <h:outputText value="Email"/>
+                            <p:inputText id="email" value="#{AsistenteBean.email}"/>
+                            <h:outputText value="Semestre"/>
+                            <p:spinner min="1" max="10" id="semestre" value="#{AsistenteBean.semestre}"/>
+                            <h:outputText value="Género"/>
+                            <p:inputText id="genero" value="#{AsistenteBean.genero}"/>
+                            <h:outputText value="Activo"/>
+                            <p:inputText id="activo" value="#{AsistenteBean.activo}"/>
+                            <h:outputText value="Observaciones"/>
+                            <p:inputText id="observaciones" value="#{AsistenteBean.observaciones}"/>
+                            
+                            <h:outputText value="Evento"/>
+                            <h:selectOneMenu value="#{AsistenteBean.evento}">
+                                <f:selectItems value="#{AsistenteBean.listaEventos}" var="user" itemValue="#{user.getEntidad().idEvento}" itemLabel="#{user.getEntidad().nombreEvento}" />
+                            </h:selectOneMenu>
+                            
+                            <p:commandButton
+                                value="Guardar"
+                                action="#{AsistenteBean.crear}"
+                                rendered="#{AsistenteBean.modoCrear}"
+                                ajax="false"
+                                image="ui-icon ui-icon-disk"
+                                />
+
+                            <p:commandButton
+                                value="Regresar"
+                                action="/asistentes/listadoAsistente.xhtml"
+                                ajax="false"
+                                image="ui-icon ui-icon-arrow-1-w"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </p:panel>
+        </center>
+    </h:body>
+</html>
