@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import services.Email;
 
 /* @author Asuncion */
 @ManagedBean(name = "AsistenteBean")
@@ -24,6 +25,8 @@ public class AsistenteBean extends BaseBean {
 
     private AsistenteDTO asistenteDTO;
     private EventoDTO eventoDTO;
+    private EventoDelegate eventoDelegate;
+    
 
     public AsistenteBean() {
     }
@@ -49,6 +52,11 @@ public class AsistenteBean extends BaseBean {
                 asistenteDTO.getEntidad().setGenero("M".charAt(0));
             }
             asistenteDelegate.crearAsistente(asistenteDTO);
+            
+            Email email = new Email();
+            
+            email.sendEmailText(asistenteDTO.getEntidad().getEmailAsistente(), "Registro exitoso", "Se ha registrado al evento: "+asistenteDTO.getEntidad().getNombreAsistente() + " para el evento " + this.getEventoAsEvento().getNombreEvento());
+            
             return "/asistentes/listadoAsistente.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,6 +240,19 @@ public class AsistenteBean extends BaseBean {
             return asistenteDTO.getEntidad().getIdEvento().getIdEvento();
         } else {
             return eventoDelegate.listarEventos().get(0).getEntidad().getIdEvento();
+        }
+    }
+    
+    
+    public Evento getEventoAsEvento() throws SQLException {
+        EventoDelegate eventoDelegate = new EventoDelegate();
+//        System.out.println("getting evento");
+//        System.out.println(asistenteDTO.getEntidad().toString());
+        if (asistenteDTO.getEntidad().getIdEvento()!= null) {
+            return eventoDelegate.leerEvento(new EventoDTO(asistenteDTO.getEntidad().getIdEvento())).getEntidad();
+            //return asistenteDTO.getEntidad().getIdEvento();
+        } else {
+            return eventoDelegate.listarEventos().get(0).getEntidad();
         }
     }
 

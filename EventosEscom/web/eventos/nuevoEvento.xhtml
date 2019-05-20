@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -12,9 +10,10 @@
         <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
     </h:head>
     <h:body>
+        
         <h:form>          
             <p:menubar>
-                <p:submenu label="New" icon="ui-icon-contact">  
+                <p:submenu label="Opciones" icon="ui-icon-contact">  
                     <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
                     <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
                 </p:submenu>
@@ -27,6 +26,7 @@
 
             </p:menubar>
         </h:form>
+        
         <center>
             <p:panel header="Formulario de Evento"
                      style="text-align: left;width: 400px;
@@ -49,8 +49,8 @@
 
                             <p:commandButton
                                 value="Guardar"
-                                action="#{EventoBean.actualizar}"
-                                rendered="#{EventoBean.modoActualizar}"
+                                action="#{EventoBean.crear}"
+                                rendered="#{EventoBean.modoCrear}"
                                 ajax="false"
                                 image="ui-icon ui-icon-disk"/>
 

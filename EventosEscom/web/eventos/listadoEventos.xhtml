@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -12,22 +11,38 @@
     </h:head>
     <h:body>
 
+        <h:form>          
+            <p:menubar>
+                <p:submenu label="New" icon="ui-icon-contact">  
+                    <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
+                    <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
+                </p:submenu>
+
+                <f:facet name="options">                                        
+                    <p:commandButton type="button" value="Logout" icon="pi pi-home" />
+                </f:facet>
+
+                <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
+
+            </p:menubar>
+        </h:form>
+
         <center>
             <p:panel header="Listado de Eventos"
-                     style="text-align: left;width: 950px;
+                     style="text-align: left; width: 1250px;;
                      vertical-align: middle;">
                 <f:view>
                     <h:form id="frmEvento">                        
                         <p:dataTable value="#{EventoBean.getLista()}"
                                      var="evento"
-                                     style="font-size:12px"
+                                     style="font-size:14px"
                                      paginator="true"
                                      rows="5"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="5,10,15">
-                            <p:column>
+                            <p:column style="width: 25px">
                                 <f:facet name="header">
-                                    <h:outputText value="idEvento"/>
+                                    <h:outputText value="id"/>
                                 </f:facet>
                                 <h:outputText value="#{evento.getEntidad().idEvento}"/>
                             </p:column>
@@ -56,7 +71,7 @@
 
                                 <h:outputText value="#{evento.getEntidad().observaciones}"/>
                             </p:column>
-                            <p:column>
+                            <p:column style="width: 200px;text-align: center">
                                 <f:facet name="header">
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
@@ -73,16 +88,16 @@
                                         value="#{evento.getEntidad().idEvento}" />
                                 </p:commandButton>
                                 <p:commandButton
-                                    action="kd"
+                                    action="#{EventoBean.borrar}"
                                     value="Eliminar"
                                     immediate="true"
-                                    actionListener="xf"
+                                    actionListener="#{EventoBean.seleccionaEvento}"
                                     ajax="false"
                                     image="ui-icon ui-icon-trash"
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="dd" />
+                                        value="#{evento.getEntidad().idEvento}" />
                                 </p:commandButton>
 
                             </p:column>

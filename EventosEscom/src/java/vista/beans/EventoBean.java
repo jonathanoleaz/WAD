@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.beans;
 
 import delegate.EventoDelegate;
@@ -15,7 +10,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import static vista.beans.BaseBean.ACC_CREAR;
 
-/* @author Asuncion */
 @ManagedBean(name = "EventoBean")
 @SessionScoped
 public class EventoBean extends BaseBean {
@@ -39,31 +33,31 @@ public class EventoBean extends BaseBean {
     public String crear() {
         EventoDelegate asistenteDelegate = new EventoDelegate();
         try {
-            
-            System.out.println("prueba:: "+ alumnoDTO.getEntidad().toString());
+
+            System.out.println("prueba:: " + alumnoDTO.getEntidad().toString());
             asistenteDelegate.crearEvento(alumnoDTO);
-            return "/eventos/listadoEvento.xhtml";
+            return "/eventos/listadoEventos.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
             error("errorCrearEvento", "Error al crear articulo");
-            return "/eventos/listadoEvento.xhtml";
+            return "/eventos/listadoEventos.xhtml";
         }
     }
 
     public String actualizar() {
-        
+
         EventoDelegate asistenteDelegate = new EventoDelegate();
-        
+
         System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().toString());
 
         try {
-            
+
             asistenteDelegate.actualiza(alumnoDTO);
-            return "/eventos/listadoEvento.xhtml";
+            return "/eventos/listadoEventos.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
             error("errorCrearAlumno", "Error al crear articulo");
-            return "/eventos/listadoEvento.xhtml";
+            return "/eventos/listadoEventos.xhtml";
         }
     }
 
@@ -104,7 +98,11 @@ public class EventoBean extends BaseBean {
     }
 
     public String getIdEvento() {
-        return alumnoDTO.getEntidad().getIdEvento().toString();
+        if (alumnoDTO.getEntidad().getIdEvento() != null) {
+            return alumnoDTO.getEntidad().getIdEvento().toString();
+        } else {
+            return "0";
+        }
     }
 
     public void setIdEvento(String idEvento) {
@@ -112,7 +110,11 @@ public class EventoBean extends BaseBean {
     }
 
     public String getNombreEvento() {
-        return alumnoDTO.getEntidad().getNombreEvento();
+        if (alumnoDTO.getEntidad().getNombreEvento() != null) {
+            return alumnoDTO.getEntidad().getNombreEvento();
+        } else {
+            return "";
+        }
     }
 
     public void setNombreEvento(String descripcion) {
@@ -120,16 +122,25 @@ public class EventoBean extends BaseBean {
     }
 
     public Date getInicio() {
-        return alumnoDTO.getEntidad().getInicio();
+        //System.out.println("FECCHA de bd: "+alumnoDTO.getEntidad().getInicio().toString());
+        if (alumnoDTO.getEntidad().getInicio() != null) {
+            return alumnoDTO.getEntidad().getInicio();
+        } else {
+            return new Date();
+        }
     }
 
     public void setInicio(Date existencias) {
+        System.out.println("INICIO: " + existencias.toString());
         alumnoDTO.getEntidad().setInicio(existencias);
     }
-    
-    
+
     public Date getFin() {
-        return alumnoDTO.getEntidad().getInicio();
+        if (alumnoDTO.getEntidad().getFin() != null) {
+            return alumnoDTO.getEntidad().getFin();
+        } else {
+            return new Date();
+        }
     }
 
     public void setFin(Date existencias) {
@@ -137,13 +148,15 @@ public class EventoBean extends BaseBean {
     }
 
     public String getObservaciones() {
-        return alumnoDTO.getEntidad().getObservaciones();
+        if (alumnoDTO.getEntidad().getObservaciones() != null) {
+            return alumnoDTO.getEntidad().getObservaciones();
+        } else {
+            return "";
+        }
     }
 
     public void setObservaciones(String existencias) {
         alumnoDTO.getEntidad().setObservaciones(existencias);
     }
-    
-    
 
 }

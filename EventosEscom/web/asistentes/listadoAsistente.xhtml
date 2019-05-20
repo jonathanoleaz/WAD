@@ -11,22 +11,39 @@
         <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
     </h:head>
     <h:body>
+        <h:form>          
+            <p:menubar>
+                <p:submenu label="New" icon="ui-icon-contact">  
+                    <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
+                    <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
+                </p:submenu>
+
+                <f:facet name="options">                                        
+                    <p:commandButton type="button" value="Logout" icon="pi pi-home" />
+                </f:facet>
+                
+                <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
+
+            </p:menubar>
+        </h:form>
+
+
         <center>
             <p:panel header="Listado de Asistentes"
-                     style="text-align: left;width: 950px;
+                     style="text-align: left;width: 1250px;
                      vertical-align: middle;">
                 <f:view>
                     <h:form id="frmAsistente">                        
                         <p:dataTable value="#{AsistenteBean.getLista()}"
                                      var="asistente"
-                                     style="font-size:12px"
+                                     style="font-size:14px"
                                      paginator="true"
                                      rows="5"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="5,10,15">
-                            <p:column>
+                            <p:column style="width: 25px">
                                 <f:facet name="header">
-                                    <h:outputText value="idAsistente"/>
+                                    <h:outputText value="id"/>
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().idAsistente}"/>
                             </p:column>
@@ -48,29 +65,29 @@
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().maternoAsistente}"/>
                             </p:column>
-                            <p:column style="width:150px;">
+                            <p:column >
                                 <f:facet name="header">
                                     <h:outputText value="Email"/>
                                 </f:facet>
-                                
+
                                 <h:outputText value="#{asistente.getEntidad().emailAsistente}"/>
                             </p:column>
-                            <p:column>
+                            <p:column style="width: 60px">
                                 <f:facet name="header">
                                     <h:outputText value="Semestre"/>
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().semestre}"/>
-                               
+
                             </p:column>
-                            
-                            <p:column>
+
+                            <p:column style="width: 60px">
                                 <f:facet name="header">
                                     <h:outputText value="Activo"/>
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().activo}"/>
-                               
+
                             </p:column>
-                            <p:column>
+                            <p:column style="width: 200px;text-align: center">
                                 <f:facet name="header">
                                     <h:outputText value="Acciones"/>
                                 </f:facet>

@@ -1,6 +1,5 @@
 package facade;
 
-
 import dao.EventoDAO;
 import dto.EventoDTO;
 import entidades.Evento;
@@ -26,15 +25,15 @@ public class EventoFacade {
         return dao.loadAll(cnn);
     }
 
-    public EventoDTO leer(EventoDTO dto)throws SQLException {
+    public EventoDTO leer(EventoDTO dto) throws SQLException {
         return dao.load(dto, cnn);
     }
 
-    public void actualiza(EventoDTO dto)throws SQLException {
-         dao.update(dto, cnn);
+    public void actualiza(EventoDTO dto) throws SQLException {
+        dao.update(dto, cnn);
     }
 
-    public void elimina(EventoDTO dto)throws SQLException {
-         dao.delete(dto, cnn);
+    public void elimina(EventoDTO dto) throws SQLException {
+        dao.delete(dto, cnn);
     }
 }

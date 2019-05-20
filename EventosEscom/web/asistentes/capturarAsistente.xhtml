@@ -12,6 +12,22 @@
         <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
     </h:head>
     <h:body>
+        <h:form>          
+            <p:menubar>
+                <p:submenu label="New" icon="ui-icon-contact">  
+                    <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
+                    <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
+                </p:submenu>
+
+                <f:facet name="options">                                        
+                    <p:commandButton type="button" value="Logout" icon="pi pi-home" />
+                </f:facet>
+
+                <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
+
+            </p:menubar>
+        </h:form>
+
         <center>
             <p:panel header="Formulario de Asistente"
                      style="text-align: left;width: 400px;
@@ -33,7 +49,13 @@
                             <h:outputText value="Semestre"/>
                             <p:spinner min="1" max="10" id="semestre" value="#{AsistenteBean.semestre}"/>
                             <h:outputText value="Género"/>
-                            <p:inputText id="genero" value="#{AsistenteBean.genero}"/>
+                            
+
+                            <p:selectOneRadio id="console" value="#{AsistenteBean.genero}" >
+                                <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                <f:selectItem itemLabel="Femenino" itemValue="F" />
+                            </p:selectOneRadio>
+
                             <h:outputText value="Activo"/>
                             <p:inputText id="activo" value="#{AsistenteBean.activo}"/>
                             <h:outputText value="Observaciones"/>
