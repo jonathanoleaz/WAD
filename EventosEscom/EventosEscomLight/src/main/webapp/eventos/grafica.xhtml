@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" 
+      >
+    <h:head>
+        <title>
+            Gráfica de Eventos
+        </title>
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
+    </h:head>
+    <h:body>
+
+        <h:form>          
+            <p:menubar>
+                <p:submenu label="New" icon="ui-icon-contact">  
+                    <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
+                    <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
+                </p:submenu>
+
+                <f:facet name="options">                                        
+                    <p:commandButton type="button" value="Logout" icon="pi pi-home" />
+                </f:facet>
+
+                <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
+
+            </p:menubar>
+        </h:form>
+
+        <h:form>
+            <p:chart model="#{catalogoBean.model}" type="pie" />
+        </h:form>
+    </h:body>
+</html>

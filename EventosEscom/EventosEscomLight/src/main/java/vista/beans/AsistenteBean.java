@@ -5,17 +5,22 @@
  */
 package vista.beans;
 
+import dao.AsistenteDAO;
 import delegate.AsistenteDelegate;
 import delegate.EventoDelegate;
 import dto.AsistenteDTO;
+import dto.DatosGrafica;
 import dto.EventoDTO;
 import entidades.Evento;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.jfree.data.general.DefaultPieDataset;
 import services.Email;
 
 /* @author Asuncion */
@@ -52,11 +57,11 @@ public class AsistenteBean extends BaseBean {
                 asistenteDTO.getEntidad().setGenero("M".charAt(0));
             }
             asistenteDelegate.crearAsistente(asistenteDTO);
-            
+            /*
             Email email = new Email();
             
             email.sendEmailText(asistenteDTO.getEntidad().getEmailAsistente(), "Registro exitoso", "Se ha registrado al evento: "+asistenteDTO.getEntidad().getNombreAsistente() + " para el evento " + this.getEventoAsEvento().getNombreEvento());
-            
+            */
             return "/asistentes/listadoAsistente.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
@@ -259,5 +264,33 @@ public class AsistenteBean extends BaseBean {
     public void setEvento(Integer existencias) {
         System.out.println("AJUSTANDO EVENTO: " + existencias);
         asistenteDTO.getEntidad().setIdEvento(new Evento(existencias));
+    }
+    
+    public DefaultPieDataset getGraficaAsistente(){
+        AsistenteDAO dao=new AsistenteDAO();
+        
+        Connection cnn = null;
+        String user = "root";
+        String pwd = "root";
+        String url = "jdbc:mysql://localhost:3306/EventosEscom";
+        String mySqlDriver = "com.mysql.jdbc.Driver";
+        try {
+            Class.forName(mySqlDriver);
+            cnn = DriverManager.getConnection(url, user, pwd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        DefaultPieDataset dps=new DefaultPieDataset();
+        try{
+            List datos = dao.datosGrafica(cnn);
+            for(int indice=0; indice<datos.size(); indice++){
+                DatosGrafica dg=(DatosGrafica) datos.get(indice);
+                dps.setValue(dg.getEvento(), dg.getCantidad());
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return dps;
     }
 }

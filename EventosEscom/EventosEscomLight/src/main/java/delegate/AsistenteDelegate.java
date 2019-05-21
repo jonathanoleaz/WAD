@@ -5,12 +5,15 @@
  */
 package delegate;
 
+import dao.AsistenteDAO;
 import dto.AsistenteDTO;
+import dto.DatosGrafica;
 import facade.AsistenteFacade;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -58,4 +61,6 @@ public class AsistenteDelegate {
     public void elimina(AsistenteDTO dto) throws SQLException {
         artFacade.elimina(dto);
     }
+
+    
 }

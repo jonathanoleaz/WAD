@@ -6,6 +6,7 @@
 package dao;
 
 import dto.AsistenteDTO;
+import dto.DatosGrafica;
 import entidades.Evento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +41,13 @@ public class AsistenteDAO {
     private static final String SQL_DELETE =
             "DELETE FROM Asistente WHERE "
             + "idAsistente = ?";
+    
+    private static final String SQL_GRAFICA=
+            "SELECT e.nombreEvento, COUNT(*)"
+            + "AS total from Asistente a,"
+            + "Evento e "
+            + "where e.idEvento=a.idEvento"
+            + " GROUP BY a.idEvento";
 
     public void create(AsistenteDTO dto, Connection conn) throws SQLException {
 
@@ -160,6 +168,32 @@ public class AsistenteDAO {
             
             results.add(dto);
         }
+        return results;
+    }
+    
+    public List datosGrafica(Connection conn) throws SQLException{
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        List results=new ArrayList();
+        
+        try{
+            ps=conn.prepareStatement(SQL_GRAFICA);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                DatosGrafica dg=new DatosGrafica();
+                dg.setEvento(rs.getString(1));
+                dg.setCantidad(rs.getInt(2));
+                results.add(dg);
+            }
+        }
+            finally{
+                    //cerrar(rs);
+            //cerrar(ps);
+            //cerrar(conn);
+            
+        
+        }
+        
         return results;
     }
 
