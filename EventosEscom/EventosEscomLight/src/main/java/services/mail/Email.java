@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package services;
+package services.mail;
 
+import java.io.File;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -53,7 +54,7 @@ public class Email {
         }
 		
     }
-    public void sendEmailMultimedia(String destino, String asunto, String textoEnviar, String imagenEnviar, String tituloImagen, String pdfEnviar, String tituloPdf){
+    public void sendEmailMultimedia(String destino, String asunto, String textoEnviar, String imagenEnviar, String tituloImagen, File pdfEnviar, String tituloPdf){
 	configurarEmail();
         try {
             //Texto
@@ -61,9 +62,9 @@ public class Email {
             texto.setText(textoEnviar);
             
             //Imagen
-            BodyPart imagen = new MimeBodyPart();
-            imagen.setDataHandler(new DataHandler(new FileDataSource(imagenEnviar)));
-            imagen.setFileName(tituloImagen);
+            //BodyPart imagen = new MimeBodyPart();
+            //imagen.setDataHandler(new DataHandler(new FileDataSource(imagenEnviar)));
+            //imagen.setFileName(tituloImagen);
             
             //Pdf
             BodyPart pdf = new MimeBodyPart();
@@ -72,7 +73,7 @@ public class Email {
             
             MimeMultipart contenido = new MimeMultipart();
             contenido.addBodyPart(texto);
-            contenido.addBodyPart(imagen);
+            //contenido.addBodyPart(imagen);
             contenido.addBodyPart(pdf);
                
             MimeMessage message = new MimeMessage(session);

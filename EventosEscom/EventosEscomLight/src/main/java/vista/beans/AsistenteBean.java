@@ -11,17 +11,21 @@ import delegate.EventoDelegate;
 import dto.AsistenteDTO;
 import dto.DatosGrafica;
 import dto.EventoDTO;
+import entidades.Asistente;
 import entidades.Evento;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.jfree.data.general.DefaultPieDataset;
-import services.Email;
+import services.mail.Email;
+import services.reports.Reporter;
 
 /* @author Asuncion */
 @ManagedBean(name = "AsistenteBean")
@@ -48,6 +52,7 @@ public class AsistenteBean extends BaseBean {
     }
 
     public String crear() {
+        
         System.out.println("nadaaaaa2");
         AsistenteDelegate asistenteDelegate = new AsistenteDelegate();
         try {
@@ -57,15 +62,26 @@ public class AsistenteBean extends BaseBean {
                 asistenteDTO.getEntidad().setGenero("M".charAt(0));
             }
             asistenteDelegate.crearAsistente(asistenteDTO);
-            /*
-            Email email = new Email();
             
-            email.sendEmailText(asistenteDTO.getEntidad().getEmailAsistente(), "Registro exitoso", "Se ha registrado al evento: "+asistenteDTO.getEntidad().getNombreAsistente() + " para el evento " + this.getEventoAsEvento().getNombreEvento());
-            */
+            Reporter r=new Reporter();
+            
+            System.out.println("ID asistente: "+asistenteDTO.getEntidad().getIdAsistente());
+            
+            List todos=asistenteDelegate.listarAsistentes();                                    
+            AsistenteDTO asistenteTemp=(AsistenteDTO) todos.get(todos.size()-1);
+            
+            File f=r.generarPDF(asistenteTemp.getEntidad().getIdAsistente());            
+            
+            Email email = new Email();
+            email.sendEmailMultimedia(asistenteDTO.getEntidad().getEmailAsistente(), "Registro a evento", "Se ha registrado al evento: "+asistenteDTO.getEntidad().getNombreAsistente() + " para el evento " + this.getEventoAsEvento().getNombreEvento()
+                                        , null, null, f, "registro.pdf");
+            //email.sendEmailText(asistenteDTO.getEntidad().getEmailAsistente(), "Registro exitoso", "Se ha registrado al evento: "+asistenteDTO.getEntidad().getNombreAsistente() + " para el evento " + this.getEventoAsEvento().getNombreEvento());
+            
+            
             return "/asistentes/listadoAsistente.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
-            error("errorCrearAsistente", "Error al crear articulo");
+            error("errorCrearAsistente", "Error al crear asistente");
             return "/asistentes/listadoAsistente.xhtml";
         }
     }

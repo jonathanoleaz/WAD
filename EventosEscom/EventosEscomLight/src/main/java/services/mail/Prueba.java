@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package services;
+package services.mail;
 
+import services.mail.Email;
 import java.io.File;
 
 public class Prueba {
