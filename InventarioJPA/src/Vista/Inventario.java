@@ -20,6 +20,9 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -43,7 +46,7 @@ public class Inventario extends javax.swing.JFrame {
         ArticuloJpaController artContr = new ArticuloJpaController(emf);
 
         System.out.println(Arrays.toString(artContr.findArticuloEntities().toArray()));
-        showDataInTable(artContr.findArticuloEntities(), jTableMovtos);
+        showDataInTableProducto(artContr.findArticuloEntities(), jTableMovtos);
     }
 
     /**
@@ -69,11 +72,15 @@ public class Inventario extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableMovtos1 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Productos");
 
-        jTableMovtos.setBackground(new java.awt.Color(255, 204, 204));
-        jTableMovtos.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jTableMovtos.setBackground(new java.awt.Color(204, 204, 255));
+        jTableMovtos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTableMovtos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -92,35 +99,38 @@ public class Inventario extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableMovtos);
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setText("Productos");
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel2.setText("Descripción:");
 
-        txtDescr.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        txtDescr.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtDescr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDescrActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Precio:");
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel3.setText("Precio ($ pesos):");
 
-        jspnPrec.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
-        jspnPrec.setModel(new javax.swing.SpinnerNumberModel(10.5f, 0.5f, null, 1.0f));
+        jspnPrec.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jspnPrec.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(10.5f), Float.valueOf(0.5f), null, Float.valueOf(1.0f)));
 
-        jLabel4.setText("Existencia");
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel4.setText("Existencia (unidades):");
 
-        jspnExistencia.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jspnExistencia.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel5.setText("Clave prod.:");
 
-        jspnClave.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jspnClave.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jspnClave.setEnabled(false);
 
-        btnAgregar.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        btnAgregar.setBackground(new java.awt.Color(153, 255, 153));
+        btnAgregar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +138,8 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
 
-        btnActualizar.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        btnActualizar.setBackground(new java.awt.Color(255, 255, 153));
+        btnActualizar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +147,8 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        btnEliminar.setBackground(new java.awt.Color(255, 204, 204));
+        btnEliminar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,56 +156,72 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
 
+        jTableMovtos1.setBackground(new java.awt.Color(255, 204, 255));
+        jTableMovtos1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jTableMovtos1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableMovtos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMovtos1MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableMovtos1);
+
+        jLabel6.setFont(new java.awt.Font("Roboto Black", 2, 14)); // NOI18N
+        jLabel6.setText("Movimientos del producto seleccionado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(238, 238, 238)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(87, 87, 87)
-                                .addComponent(jLabel5))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnAgregar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnActualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtDescr, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(btnAgregar)
-                                        .addGap(80, 80, 80)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(btnActualizar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(35, 35, 35)
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jspnPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                                .addComponent(jLabel4)
-                                .addGap(27, 27, 27)
-                                .addComponent(jspnExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jspnClave, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(btnEliminar)
-                                        .addGap(14, 14, 14)))))))
+                                        .addComponent(jLabel5))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDescr, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(168, 168, 168)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jspnPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jspnClave, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jspnExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -217,8 +245,12 @@ public class Inventario extends javax.swing.JFrame {
                     .addComponent(btnAgregar)
                     .addComponent(btnActualizar)
                     .addComponent(btnEliminar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -244,8 +276,19 @@ public class Inventario extends javax.swing.JFrame {
         this.jspnExistencia.setValue(al.getExistencia());
 
         this.jspnPrec.setValue(al.getPrecio());
+        
+        
+        /*Para la tabla de movimientos*/
+        
+        em.getTransaction().begin();
+        em.getTransaction().commit();
+        MovimientoarticuloJpaController movtoContr = new MovimientoarticuloJpaController(emf);
 
-
+        //System.out.println(Arrays.toString(movtoContr.findArticuloEntities().toArray()));
+        List<Movimientoarticulo> listEmployees=(List<Movimientoarticulo>) al.getMovimientoarticuloCollection();
+        
+        showDataInTableMovtos(listEmployees, jTableMovtos1);
+        
     }//GEN-LAST:event_jTableMovtosMouseClicked
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -272,7 +315,7 @@ public class Inventario extends javax.swing.JFrame {
         movtoContr.create(movtoArt);
         
 
-        showDataInTable(artContr.findArticuloEntities(), jTableMovtos);
+        showDataInTableProducto(artContr.findArticuloEntities(), jTableMovtos);
 
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -293,7 +336,7 @@ public class Inventario extends javax.swing.JFrame {
             em.getTransaction().commit();
             
             
-            showDataInTable(artContr.findArticuloEntities(), jTableMovtos);
+            showDataInTableProducto(artContr.findArticuloEntities(), jTableMovtos);
         } catch (Exception ex) {
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -306,13 +349,22 @@ public class Inventario extends javax.swing.JFrame {
             ArticuloJpaController artContr = new ArticuloJpaController(emf);
             Articulo art = new Articulo();
             art.setClaveart((Integer) this.jspnClave.getValue());
+            System.out.println("Articulo: "+art.getClaveart());
             artContr.destroy(art.getClaveart());
+            
+            showDataInTableProducto(artContr.findArticuloEntities(), jTableMovtos);
         } catch (IllegalOrphanException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", ERROR_MESSAGE);
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", WARNING_MESSAGE);
             Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jTableMovtos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMovtos1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableMovtos1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -349,10 +401,18 @@ public class Inventario extends javax.swing.JFrame {
         });
     }
 
-    public void showDataInTable(List<Articulo> listEmployees, JTable table) {
+    public void showDataInTableProducto(List<Articulo> listEmployees, JTable table) {
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Clave", "Descripcion", "Precio", "Existencia"}, 0);
         for (Articulo alum : listEmployees) {
             model.addRow(new Object[]{alum.getClaveart(), alum.getDescripcion(), alum.getPrecio(), alum.getExistencia()});
+        }
+        table.setModel(model);
+    }
+    
+    public void showDataInTableMovtos(List<Movimientoarticulo> listEmployees, JTable table) {
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Folio", "Fecha", "Tipo", "Cantidad", "Producto"}, 0);
+        for (Movimientoarticulo alum : listEmployees) {
+            model.addRow(new Object[]{alum.getFolio(), alum.getFecha(), alum.getTipo(), alum.getCantidad(), alum.getClaveart().getClaveart()});
         }
         table.setModel(model);
     }
@@ -367,8 +427,11 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMovtos;
+    private javax.swing.JTable jTableMovtos1;
     private javax.swing.JSpinner jspnClave;
     private javax.swing.JSpinner jspnExistencia;
     private javax.swing.JSpinner jspnPrec;

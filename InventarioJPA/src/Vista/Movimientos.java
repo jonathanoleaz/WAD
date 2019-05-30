@@ -83,14 +83,15 @@ public class Movimientos extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jdtFecha = new com.toedter.calendar.JDateChooser();
-        jcmbTipo = new javax.swing.JComboBox<>();
+        jcmbTipo = new javax.swing.JComboBox<String>();
         jLabel6 = new javax.swing.JLabel();
-        jcmbArticulo = new javax.swing.JComboBox<>();
+        jcmbArticulo = new javax.swing.JComboBox<String>();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Movimientos");
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel1.setText("Movimientos");
@@ -126,7 +127,12 @@ public class Movimientos extends javax.swing.JFrame {
             }
         });
 
-        jcmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Salida" }));
+        jdtFecha.setBackground(new java.awt.Color(255, 204, 204));
+        jdtFecha.setForeground(new java.awt.Color(102, 0, 153));
+
+        jcmbTipo.setBackground(new java.awt.Color(153, 204, 255));
+        jcmbTipo.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jcmbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Entrada", "Salida" }));
         jcmbTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcmbTipoActionPerformed(evt);
@@ -135,7 +141,8 @@ public class Movimientos extends javax.swing.JFrame {
 
         jLabel6.setText("Artículo:");
 
-        jcmbArticulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+        jcmbArticulo.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jcmbArticulo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2" }));
         jcmbArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcmbArticuloActionPerformed(evt);
@@ -163,13 +170,14 @@ public class Movimientos extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jcmbArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jspnClave, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(53, 53, 53)
                                         .addComponent(jLabel4))
-                                    .addComponent(jdtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jcmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jcmbArticulo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jcmbTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jdtFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)))
                                 .addGap(18, 18, 18)
                                 .addComponent(jspnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()

@@ -141,7 +141,7 @@ public class ArticuloServlet extends HttpServlet {
     private void almacenar(HttpServletRequest request, HttpServletResponse response){
         System.out.println("Guardando carrera");
         Articulo c = new Articulo();
-        ArticuloJpaController d = new ArticuloJpaController(emf);
+        ArticuloJpaController artDao = new ArticuloJpaController(emf);
         
         Categoria cat = new Categoria();
         CategoriaJpaController catDao=new CategoriaJpaController(emf);
@@ -157,7 +157,7 @@ public class ArticuloServlet extends HttpServlet {
                 cat=catDao.findCategoria(Integer.parseInt(request.getParameter("txtCategoria")));
                 c.setIdcategoria(cat);
                 
-                d.create(c);
+                artDao.create(c);
                 listado(request, response);
             } catch (Exception ex) {
                 try {
@@ -175,7 +175,7 @@ public class ArticuloServlet extends HttpServlet {
                 c.setDescripcion(request.getParameter("txtDescripcion"));
                 c.setExistencia(Integer.parseInt(request.getParameter("txtExistencia")));
                 c.setPrecio(Integer.parseInt(request.getParameter("txtPrecio")));
-                d.edit(c);
+                artDao.edit(c);
                 listado(request, response);
                 
             } catch (Exception ex) {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="musica"/>
+  <table-filter match-name="playlist"/>
+  <table-filter match-name="invoice"/>
+  <table-filter match-name="genre"/>
+  <table-filter match-name="playlisttrack"/>
+  <table-filter match-name="invoiceline"/>
+  <table-filter match-name="track"/>
+  <table-filter match-name="mediatype"/>
+  <table-filter match-name="album"/>
+  <table-filter match-name="artist"/>
+  <table-filter match-name="customer"/>
+</hibernate-reverse-engineering>

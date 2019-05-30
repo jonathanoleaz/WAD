@@ -24,8 +24,7 @@
             <c:forEach var="categoria" items="${lista}">
                 <tr>
                     <td><c:out value="${categoria.idcategoria}"/></td>
-                    <td><c:out value="${categoria.descripcion}"/></td>
-                    
+                    <td><c:out value="${categoria.descripcion}"/></td>                    
                     
                     <td><a href="CarreraServlet?accion=eliminar&id=${categoria.idcategoria} ">Eliminar</a></td>
                     <td><a href="CarreraServlet?accion=actualizar&id=${categoria.idcategoria} ">Actualizar</a></td>
