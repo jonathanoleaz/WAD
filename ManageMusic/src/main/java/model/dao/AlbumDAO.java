@@ -2,51 +2,49 @@ package model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dto.ArtistDTO;
-import model.entities.Artist;
+import model.entities.Album;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  *
  * @author jonat
  */
-public class ArtistDAO {
+public class AlbumDAO {
 
     static Session sessionObj;
     static SessionFactory sessionFactoryObj;
 
     // This Method Is Used To Create The Hibernate's SessionFactory Object
-    /*private SessionFactory buildSessionFactory() {
-     // Creating Configuration Instance & Passing Hibernate Configuration File
-     Configuration configObj = new Configuration();
-     configObj.configure("hibernate.cfg.xml");
+    private static SessionFactory buildSessionFactory() {
+        // Creating Configuration Instance & Passing Hibernate Configuration File
+        Configuration configObj = new Configuration();
+        configObj.configure("hibernate.cfg.xml");
 
-     // Since Hibernate Version 4.x, ServiceRegistry Is Being Used
-     ServiceRegistry serviceRegistryObj = new StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build();
+        // Since Hibernate Version 4.x, ServiceRegistry Is Being Used
+        ServiceRegistry serviceRegistryObj = new StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build();
 
-     // Creating Hibernate SessionFactory Instance
-     sessionFactoryObj = configObj.buildSessionFactory(serviceRegistryObj);
-        
-     return sessionFactoryObj;
-     }*/
-    // Method 1: This Method Used To Create A New Artist Record In The Database Table
-    public void createRecord(ArtistDTO artdto) {
+        // Creating Hibernate SessionFactory Instance
+        sessionFactoryObj = configObj.buildSessionFactory(serviceRegistryObj);
+        return sessionFactoryObj;
+    }
+
+    // Method 1: This Method Used To Create A New Album Record In The Database Table
+    public static void createRecord(Album artObj) {
         int count = 0;
 
         try {
             // Getting Session Object From SessionFactory
-            //HibernateUtil.openSessionAndBindToThread();
-            if(NewHibernateUtil.getSessionFactory().getCurrentSession().isOpen())
-                sessionObj=NewHibernateUtil.getSessionFactory().getCurrentSession();
-            else
-                sessionObj=NewHibernateUtil.getSessionFactory().openSession();
+            sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            sessionObj.save(artdto.getEntidad());
+            sessionObj.save(artObj);
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
@@ -62,33 +60,21 @@ public class ArtistDAO {
         } finally {
             if (sessionObj != null) {
                 sessionObj.close();
-                // HibernateUtil.getSessionFactory().close();
             }
         }
     }
 
     // Method 2: This Method Is Used To Display The Records From The Database Table
-    public ArrayList<ArtistDTO> displayRecords() {
+    @SuppressWarnings("unchecked")
+    public static List displayRecords() {
         List studentsList = new ArrayList();
-        ArrayList<ArtistDTO> studentsListDTO = new ArrayList();
-
         try {
             // Getting Session Object From SessionFactory
-
-            //HibernateUtil.openSessionAndBindToThread();
-            if(NewHibernateUtil.getSessionFactory().getCurrentSession().isOpen())
-                sessionObj=NewHibernateUtil.getSessionFactory().getCurrentSession();
-            else
-                sessionObj=NewHibernateUtil.getSessionFactory().openSession();
-
+            sessionObj = buildSessionFactory().openSession();
+            // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            studentsList = sessionObj.createQuery("FROM Artist").list();
-
-            for (Object studentsList1 : studentsList) {
-                studentsListDTO.add(new ArtistDTO((Artist) studentsList1));
-            }
-
+            studentsList = sessionObj.createQuery("FROM Album").list();
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {
@@ -98,36 +84,26 @@ public class ArtistDAO {
             }
         } finally {
             if (sessionObj != null) {
-
-                //HibernateUtil.closeSessionAndUnbindFromThread();
                 sessionObj.close();
-                //sessionFactory.close(); // Getting Transaction Object From Session Object
-                System.out.println("SESIÓN CERRADA");
             }
         }
-        return studentsListDTO;
+        return studentsList;
     }
 
     // Method 3: This Method Is Used To Update A Record In The Database Table   
-    public void updateRecord(ArtistDTO artdto) {
-
+    public static void updateRecord(Album artObj) {
         try {
             // Getting Session Object From SessionFactory
-            //HibernateUtil.openSessionAndBindToThread();
-            if(NewHibernateUtil.getSessionFactory().getCurrentSession().isOpen())
-                sessionObj=NewHibernateUtil.getSessionFactory().getCurrentSession();
-            else
-                sessionObj=NewHibernateUtil.getSessionFactory().openSession();
-
+            sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
             // Creating Transaction Entity
-            sessionObj.saveOrUpdate(artdto.getEntidad());
+            sessionObj.update(artObj);
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-            System.out.println("\nArtist With Id?= " + artdto.getEntidad().toString() + " Is Successfully Updated In The Database!\n");
+            System.out.println("\nAlbum With Id?= " + artObj.toString() + " Is Successfully Updated In The Database!\n");
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {
@@ -137,29 +113,24 @@ public class ArtistDAO {
         } finally {
             if (sessionObj != null) {
                 sessionObj.close();
-                //HibernateUtil.closeSessionAndUnbindFromThread();
             }
         }
     }
 
     // Method 4(a): This Method Is Used To Delete A Particular Record From The Database Table
-    public void deleteRecord(ArtistDTO artdto) {
+    public static void deleteRecord(Integer student_id) {
         try {
             // Getting Session Object From SessionFactory
-            //HibernateUtil.openSessionAndBindToThread();
-            if(NewHibernateUtil.getSessionFactory().getCurrentSession().isOpen())
-                sessionObj=NewHibernateUtil.getSessionFactory().getCurrentSession();
-            else
-                sessionObj=NewHibernateUtil.getSessionFactory().openSession();
+            sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            ArtistDTO studObj = findRecordById(artdto.getEntidad().getArtistid());
+            Album studObj = findRecordById(student_id);
             sessionObj.delete(studObj);
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-            System.out.println("\nArtist With Id?= " + studObj.getEntidad().getArtistid() + " Is Successfully Deleted From The Database!\n");
+            System.out.println("\nAlbum With Id?= " + student_id + " Is Successfully Deleted From The Database!\n");
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {
@@ -169,27 +140,20 @@ public class ArtistDAO {
         } finally {
             if (sessionObj != null) {
                 sessionObj.close();
-//                HibernateUtil.closeSessionAndUnbindFromThread();
             }
         }
     }
 
     // Method 4(b): This Method To Find Particular Record In The Database Table
-    public ArtistDTO findRecordById(Integer find_student_id) {
-        ArtistDTO artDTO = new ArtistDTO();
-        Artist findArtistObj = null;
+    public static Album findRecordById(Integer find_student_id) {
+        Album findAlbumObj = null;
         try {
             // Getting Session Object From SessionFactory
-            //HibernateUtil.openSessionAndBindToThread();
-            if(NewHibernateUtil.getSessionFactory().getCurrentSession().isOpen())
-                sessionObj=NewHibernateUtil.getSessionFactory().getCurrentSession();
-            else
-                sessionObj=NewHibernateUtil.getSessionFactory().openSession();
+            sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            findArtistObj = (Artist) sessionObj.get(Artist.class, find_student_id);
-            artDTO = new ArtistDTO(findArtistObj);
+            findAlbumObj = (Album) sessionObj.load(Album.class, find_student_id);
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {
@@ -197,28 +161,19 @@ public class ArtistDAO {
                 sessionObj.getTransaction().rollback();
             }
 
-        } finally {
-            if (sessionObj != null) {
-                sessionObj.close();
-                //HibernateUtil.closeSessionAndUnbindFromThread();
-            }
         }
-        return artDTO;
+        return findAlbumObj;
     }
 
     // Method 5: This Method Is Used To Delete All Records From The Database Table
-    public void deleteAllRecords() {
+    public static void deleteAllRecords() {
         try {
             // Getting Session Object From SessionFactory
-//            HibernateUtil.openSessionAndBindToThread();
-            if(NewHibernateUtil.getSessionFactory().getCurrentSession().isOpen())
-                sessionObj=NewHibernateUtil.getSessionFactory().getCurrentSession();
-            else
-                sessionObj=NewHibernateUtil.getSessionFactory().openSession();
+            sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            Query queryObj = sessionObj.createQuery("DELETE FROM Artist");
+            Query queryObj = sessionObj.createQuery("DELETE FROM Album");
             queryObj.executeUpdate();
 
             // Committing The Transactions To The Database
@@ -234,7 +189,6 @@ public class ArtistDAO {
         } finally {
             if (sessionObj != null) {
                 sessionObj.close();
-//                HibernateUtil.closeSessionAndUnbindFromThread();
             }
         }
 

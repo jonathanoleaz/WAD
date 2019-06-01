@@ -19,7 +19,9 @@ public class AppMain {
         System.out.println(".......Hibernate Crud Operations Example.......\n");
  
         System.out.println("\n=======CREATE RECORDS=======\n");
-        ArtistDAO.createRecord(new Artist(0, "Jonathan", null));
+        Artist art=new Artist();
+        art.setName("Update");
+        /*ArtistDAO.createRecord(art);
  
         System.out.println("\n=======READ RECORDS=======\n");
         List viewStudents = ArtistDAO.displayRecords();
@@ -31,7 +33,9 @@ public class AppMain {
  
         System.out.println("\n=======UPDATE RECORDS=======\n");
         int updateId = 1;
-        ArtistDAO.updateRecord(new Artist(1, "Nuevos", null));
+        art=ArtistDAO.findRecordById(2);
+        art.setName("Nuevo");
+        ArtistDAO.updateRecord(art);
         System.out.println("\n=======READ RECORDS AFTER UPDATION=======\n");
         List updateStudent = ArtistDAO.displayRecords();
         if(updateStudent != null & updateStudent.size() > 0) {

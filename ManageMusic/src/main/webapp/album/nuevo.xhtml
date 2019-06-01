@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>
+            Formulario de Artists
+        </title>
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/blitzer/skin.css"/>
+    </h:head>
+    <h:body>
+        
+        <h:form>          
+            <p:menubar>
+                <p:submenu label="Opciones" icon="ui-icon-contact">  
+                    <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
+                    <p:menuitem value="Artists" url="/faces/eventos/listadoArtists.xhtml" ajax="false"/>  
+                </p:submenu>
+
+                <f:facet name="options">                                        
+                    <p:commandButton type="button" value="Logout" icon="pi pi-home" />
+                </f:facet>
+                
+                <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
+
+            </p:menubar>
+        </h:form>
+        
+        <center>
+            <p:panel header="Formulario de Artist"
+                     style="text-align: left;width: 400px;
+                     vertical-align: middle;">
+                <f:view>
+                    <h:form id="frmArtist">
+                        <h:inputHidden id="accion" value="#{ArtistaBean.accion}"/>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="ID artista"/>
+                            <p:inputText id="idArtist"  value="#{ArtistaBean.idArtist}"/>
+                            <h:outputText value="Nombre"/>
+                            <p:inputText id="nombre"    value="#{ArtistaBean.name}"/>                                                                                                     
+
+                            <p:commandButton
+                                value="Regresar"
+                                action="/artista/lista.xhtml"
+                                ajax="false"
+                                image="ui-icon ui-icon-arrow-1-w"/>
+                            
+                            <p:commandButton
+                                value="Crear"
+                                action="#{ArtistaBean.crear()}"
+                                rendered="#{ArtistaBean.modoCrear}"
+                                ajax="false"
+                                image="ui-icon ui-icon-disk"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </p:panel>
+        </center>
+    </h:body>
+</html>
