@@ -20,11 +20,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import model.delegate.AlbumDelegate;
 import model.delegate.ArtistDelegate;
+import model.delegate.GenreDelegate;
+import model.delegate.MediatypeDelegate;
 import model.dto.AlbumDTO;
 import model.dto.ArtistDTO;
+import model.dto.GenreDTO;
+import model.dto.MediatypeDTO;
 import model.entities.Album;
 import model.entities.Track;
 import model.entities.Artist;
+import model.entities.Genre;
+import model.entities.Mediatype;
 import static vista.beans.BaseBean.ACC_CREAR;
 
 
@@ -33,36 +39,36 @@ import static vista.beans.BaseBean.ACC_CREAR;
 @SessionScoped
 public class TrackBean extends BaseBean {
 
-    private TrackDTO albumDTO;
+    private TrackDTO trackDTO;
 
     public TrackBean() {
     }
 
     public String nuevo() {
-        albumDTO = new TrackDTO();
+        trackDTO = new TrackDTO();
         setAccion(ACC_CREAR);
-        return "/album/nuevo.xhtml";
+        return "/track/nuevo.xhtml";
     }
 
     public String editar() {
         setAccion(ACC_ACTUALIZAR);
-        return "/album/editar.xhtml";
+        return "/track/editar.xhtml";
     }
 
     public String crear() {
         TrackDelegate asistenteDelegate = new TrackDelegate();
         try {
 
-            asistenteDelegate.crearTrack(albumDTO);
+            asistenteDelegate.crearTrack(trackDTO);
 
             List todos = asistenteDelegate.listarTracks();
             TrackDTO asistenteTemp = (TrackDTO) todos.get(todos.size() - 1);
 
-            return "/album/lista.xhtml";
+            return "/track/lista.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
             error("errorCrearTrack", "Error al crear asistente");
-            return "/album/lista.xhtml";
+            return "/track/lista.xhtml";
         }
     }
 
@@ -72,23 +78,23 @@ public class TrackBean extends BaseBean {
        // System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().toString());
         try {
             System.out.println("updating ");
-            asistenteDelegate.actualiza(albumDTO);
-            return "/album/lista.xhtml";
+            asistenteDelegate.actualiza(trackDTO);
+            return "/track/lista.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
             error("errorCrearAlumno", "Error al crear articulo");
-            return "/album/lista.xhtml";
+            return "/track/lista.xhtml";
         }
     }
 
     public String borrar() {
         TrackDelegate asistenteDelegate = new TrackDelegate();
         try {
-            asistenteDelegate.elimina(albumDTO);
+            asistenteDelegate.elimina(trackDTO);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "/album/lista.xhtml";
+        return "/track/lista.xhtml";
     }
 
     public List getLista() throws SQLException {
@@ -115,16 +121,40 @@ public class TrackBean extends BaseBean {
             return null;
         }
     }
+    
+    public List<MediatypeDTO> getListaMediaTypes() {
+        MediatypeDelegate eventoDelegate = new MediatypeDelegate();
+        try {
+
+            return eventoDelegate.listarMediatypes();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error("ErrorListaAsistentes", "Error al mostrar articulos");
+            return null;
+        }
+    }
+    
+    public List<GenreDTO> getListaGenre() {
+        GenreDelegate genreDelegate = new GenreDelegate();
+        try {
+            
+            return genreDelegate.listarGenres();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error("ErrorListaAsistentes", "Error al mostrar articulos");
+            return null;
+        }
+    }
 
     public void seleccionaTrack(ActionEvent event) {
         TrackDelegate asistenteDelegate = new TrackDelegate();
         String claveArtSel = (String) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap()
                 .get("claveArtSel");
-        albumDTO = new TrackDTO();
-        albumDTO.getEntidad().setTrackid(Integer.parseInt(claveArtSel));
+        trackDTO = new TrackDTO();
+        trackDTO.getEntidad().setTrackid(Integer.parseInt(claveArtSel));
         try {
-            albumDTO = asistenteDelegate.leerTrack(albumDTO);
+            trackDTO = asistenteDelegate.leerTrack(trackDTO);
 //            System.out.println(asistenteDTO.getEntidad().getName());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -134,7 +164,7 @@ public class TrackBean extends BaseBean {
     public String getIdTrack() {
 //        System.out.println(asistenteDTO.getEntidad().toString());
         try{
-            return albumDTO.getEntidad().getTrackid() + "";
+            return trackDTO.getEntidad().getTrackid() + "";
         } catch(NullPointerException e) {
             return 0 + "";
         }
@@ -142,27 +172,70 @@ public class TrackBean extends BaseBean {
     }
 
     public void setIdTrack(String idTrack) {
-        albumDTO.getEntidad().setTrackid(Integer.parseInt(idTrack));
+        trackDTO.getEntidad().setTrackid(Integer.parseInt(idTrack));
     }
     
     
     public Integer getAlbum() {
 //        System.out.println(asistenteDTO.getEntidad().toString());
         try{
-            System.out.println("Dando artista del album: "+albumDTO.getEntidad().getAlbum().getName());
-            return albumDTO.getEntidad().getAlbum().getAlbumid();
+            System.out.println("Dando artista del track: "+trackDTO.getEntidad().getAlbum().getName());
+            return trackDTO.getEntidad().getAlbum().getAlbumid();
         } catch(NullPointerException e) {
             return 0;
         }
-
     }
 
     public void setAlbum(Integer idTrack) {
         try {
-            System.out.println("Ajustando artista del album: ");
+            System.out.println("Ajustando artista del track: ");
             AlbumDelegate artdel=new AlbumDelegate();
             Album art=artdel.leerAlbum(new AlbumDTO(new Album(idTrack, null))).getEntidad();
-            albumDTO.getEntidad().setAlbum(art);
+            trackDTO.getEntidad().setAlbum(art);
+        } catch (SQLException ex) {
+            Logger.getLogger(TrackBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public Integer getMediatype() {
+//        System.out.println(asistenteDTO.getEntidad().toString());
+        try{
+            System.out.println("Dando artista del track: "+trackDTO.getEntidad().getMediatype().getName());
+            return trackDTO.getEntidad().getAlbum().getAlbumid();
+        } catch(NullPointerException e) {
+            return 0;
+        }
+    }
+
+    public void setMediatype(Integer idTrack) {
+        try {
+            System.out.println("Ajustando artista del track: ");
+            MediatypeDelegate artdel=new MediatypeDelegate();
+            Mediatype art=artdel.leerMediatype(new MediatypeDTO(new Mediatype(idTrack))).getEntidad();
+            trackDTO.getEntidad().setMediatype(art);
+        } catch (SQLException ex) {
+            Logger.getLogger(TrackBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public Integer getGenre() {
+//        System.out.println(asistenteDTO.getEntidad().toString());
+        try{
+            System.out.println("Dando artista del track: "+trackDTO.getEntidad().getMediatype().getName());
+            return trackDTO.getEntidad().getGenre().getGenreid();
+        } catch(NullPointerException e) {
+            return 0;
+        }
+    }
+
+    public void setGenre(Integer idTrack) {
+        try {
+            System.out.println("Ajustando artista del track: ");
+            GenreDelegate artdel=new GenreDelegate();
+            Genre art=artdel.leerGenre(new GenreDTO(new Genre(idTrack))).getEntidad();
+            trackDTO.getEntidad().setGenre(art);
         } catch (SQLException ex) {
             Logger.getLogger(TrackBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -170,38 +243,64 @@ public class TrackBean extends BaseBean {
 
     public String getName() {
         try {
-            return albumDTO.getEntidad().getName();
+            return trackDTO.getEntidad().getName();
         } catch(NullPointerException e) {
             return "";
         }
     }
 
     public void setName(String descripcion) {
-        albumDTO.getEntidad().setName(descripcion);
+        trackDTO.getEntidad().setName(descripcion);
     }
     
     public String getComposer() {
         try {
-            return albumDTO.getEntidad().getComposer();
+            return trackDTO.getEntidad().getComposer();
         } catch(NullPointerException e) {
             return "";
         }
     }
 
     public void setComposer(String descripcion) {
-        albumDTO.getEntidad().setComposer(descripcion);
+        trackDTO.getEntidad().setComposer(descripcion);
     }
     
     public BigDecimal getMiliseconds() {
         try {
-            return albumDTO.getEntidad().getMiliseconds();
+            return trackDTO.getEntidad().getMiliseconds();
         } catch(NullPointerException e) {
             return BigDecimal.ZERO;
         }
     }
 
     public void setMiliseconds(BigDecimal descripcion) {
-        albumDTO.getEntidad().setMiliseconds(descripcion);
+        trackDTO.getEntidad().setMiliseconds(descripcion);
+    }
+    
+    
+    public Integer getBytes() {
+        try {
+            return trackDTO.getEntidad().getBytes();
+        } catch(NullPointerException e) {
+            return 0;
+        }
+    }
+
+    public void setBytes(Integer b) {
+        trackDTO.getEntidad().setBytes(b);
+    }
+    
+    
+    public BigDecimal getUnitprice() {
+        try {
+            return trackDTO.getEntidad().getUnitprice();
+        } catch(NullPointerException e) {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    public void setUnitprice(BigDecimal b) {
+        trackDTO.getEntidad().setUnitprice(b);
     }
 
 }

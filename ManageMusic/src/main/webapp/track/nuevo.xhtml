@@ -13,9 +13,12 @@
         
         <h:form>          
             <p:menubar>
-                <p:submenu label="Opciones" icon="ui-icon-contact">  
-                    <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
-                    <p:menuitem value="Artists" url="/faces/eventos/listadoArtists.xhtml" ajax="false"/>  
+                <p:submenu label="Lists" icon="fa music" >  
+                    <p:menuitem value="Media type"  url="/faces/mediatype/lista.xhtml" ajax="false"  icon="fa music"/>
+                    <p:menuitem value="Genre"       url="/faces/genre/lista.xhtml" ajax="false"/>  
+                    <p:menuitem value="Artists"     url="/faces/artista/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Albums"      url="/faces/album/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Tracks"      url="/faces/track/lista.xhtml" ajax="false"/> 
                 </p:submenu>
 
                 <f:facet name="options">                                        
@@ -28,34 +31,56 @@
         </h:form>
         
         <center>
-            <p:panel header="Formulario de Artist"
+            <p:panel header="Formulario de Track"
                      style="text-align: left;width: 400px;
                      vertical-align: middle;">
                 <f:view>
                     <h:form id="frmArtist">
-                        <h:inputHidden id="accion" value="#{AlbumBean.accion}"/>
+                        <h:inputHidden id="accion" value="#{TrackBean.accion}"/>
                         <h:panelGrid columns="2">
                             <h:outputText value="ID album"/>
-                            <p:inputText id="idArtist"  value="#{AlbumBean.idAlbum}"/>
+                            <p:inputText id="idArtist"  value="#{TrackBean.idTrack}"/>
                             <h:outputText value="Nombre"/>
-                            <p:inputText id="nombre"    value="#{AlbumBean.name}"/>  
+                            <p:inputText id="nombre"    value="#{TrackBean.name}"/>
+                            
+                            <h:outputText value="Composer"/>
+                            <p:inputText id="composer"    value="#{TrackBean.composer}"/>
+                            
+                            <h:outputText value="Miliseconds"/>
+                            <p:inputText id="miliseconds"    value="#{TrackBean.miliseconds}"/>
+                            
+                            <h:outputText value="Bytes"/>
+                            <p:inputText id="bytes"    value="#{TrackBean.bytes}"/>
+                            
+                            <h:outputText value="Unit price"/>
+                            <p:inputText id="unitprice"    value="#{TrackBean.unitprice}"/>
                             
                             
-                            <h:outputText value="Artista"/>
-                            <h:selectOneMenu value="#{AlbumBean.artist}">
-                                <f:selectItems value="#{AlbumBean.listaArtistas}" var="user" itemValue="#{user.getEntidad().artistid}" itemLabel="#{user.getEntidad().name}" />
+                            <h:outputText value="Album"/>
+                            <h:selectOneMenu value="#{TrackBean.album}">
+                                <f:selectItems value="#{TrackBean.listaAlbums}" var="user" itemValue="#{user.getEntidad().albumid}" itemLabel="#{user.getEntidad().name}" />
+                            </h:selectOneMenu>
+                            
+                            <h:outputText value="Media type"/>
+                            <h:selectOneMenu value="#{TrackBean.mediatype}">
+                                <f:selectItems value="#{TrackBean.listaMediaTypes}" var="user" itemValue="#{user.getEntidad().mediatypeid}" itemLabel="#{user.getEntidad().name}" />
+                            </h:selectOneMenu>                            
+                            
+                            <h:outputText value="Genre"/>
+                            <h:selectOneMenu value="#{TrackBean.genre}">
+                                <f:selectItems value="#{TrackBean.listaGenre}" var="user" itemValue="#{user.getEntidad().genreid}" itemLabel="#{user.getEntidad().name}" />
                             </h:selectOneMenu>
 
                             <p:commandButton
                                 value="Regresar"
-                                action="/artista/lista.xhtml"
+                                action="/track/lista.xhtml"
                                 ajax="false"
                                 image="ui-icon ui-icon-arrow-1-w"/>
                             
                             <p:commandButton
                                 value="Actualizar"
-                                action="#{AlbumBean.crear()}"
-                                rendered="#{AlbumBean.modoCrear}"
+                                action="#{TrackBean.crear()}"
+                                rendered="#{TrackBean.modoCrear}"
                                 ajax="false"
                                 image="ui-icon ui-icon-disk"/>
                         </h:panelGrid>

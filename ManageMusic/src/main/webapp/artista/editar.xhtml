@@ -13,9 +13,12 @@
         
         <h:form>          
             <p:menubar>
-                <p:submenu label="Opciones" icon="ui-icon-contact">  
-                    <p:menuitem value="Asistentes" url="/faces/asistentes/listadoAsistente.xhtml" ajax="false"/>  
-                    <p:menuitem value="Artists" url="/faces/eventos/listadoArtists.xhtml" ajax="false"/>  
+                <p:submenu label="Lists" icon="fa music" >  
+                    <p:menuitem value="Media type"  url="/faces/mediatype/lista.xhtml" ajax="false"  icon="fa music"/>
+                    <p:menuitem value="Genre"       url="/faces/genre/lista.xhtml" ajax="false"/>  
+                    <p:menuitem value="Artists"     url="/faces/artista/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Albums"      url="/faces/album/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Tracks"      url="/faces/track/lista.xhtml" ajax="false"/> 
                 </p:submenu>
 
                 <f:facet name="options">                                        

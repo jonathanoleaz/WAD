@@ -5,6 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui" >
     <h:head>
+        
         <title>
             Listado de Tracks
         </title>
@@ -13,9 +14,12 @@
     <h:body>
         <h:form>          
             <p:menubar>
-                <p:submenu label="New" icon="ui-icon-contact">  
-                    <p:menuitem value="Tracks" url="/faces/asistentes/listadoTrack.xhtml" ajax="false"/>  
-                    <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
+                <p:submenu label="Lists" icon="fa music" >  
+                    <p:menuitem value="Media type"  url="/faces/mediatype/lista.xhtml" ajax="false"  icon="fa music"/>
+                    <p:menuitem value="Genre"       url="/faces/genre/lista.xhtml" ajax="false"/>  
+                    <p:menuitem value="Artists"     url="/faces/artista/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Albums"      url="/faces/album/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Tracks"      url="/faces/track/lista.xhtml" ajax="false"/> 
                 </p:submenu>
 
                 <f:facet name="options">                                        
@@ -45,7 +49,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="id"/>
                                 </f:facet>
-                                <h:outputText value="#{asistente.getEntidad().albumid}"/>
+                                <h:outputText value="#{asistente.getEntidad().trackid}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
@@ -56,9 +60,9 @@
                             
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Compositor"/>
+                                    <h:outputText value="Genre"/>
                                 </f:facet>
-                                <h:outputText value="#{asistente.getEntidad().composer}"/>
+                                <h:outputText value="#{asistente.getEntidad().genre.name}"/>
                             </p:column>
                             
                             
@@ -68,13 +72,17 @@
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().miliseconds}"/>
                             </p:column>
+                            
+                            
 
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Nombre"/>
+                                    <h:outputText value="Álbum"/>
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().album.name}"/>
                             </p:column>
+                            
+                            
 
                             <p:column style="width: 200px;text-align: center">
                                 <f:facet name="header">
@@ -90,7 +98,7 @@
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().albumid}" />
+                                        value="#{asistente.getEntidad().trackid}" />
                                 </p:commandButton>
                                 <p:commandButton
                                     action="#{TrackBean.borrar()}"
@@ -102,7 +110,7 @@
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().albumid}" />
+                                        value="#{asistente.getEntidad().trackid}" />
                                 </p:commandButton>
 
                             </p:column>

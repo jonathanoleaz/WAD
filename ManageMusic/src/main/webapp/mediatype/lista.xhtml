@@ -13,9 +13,12 @@
     <h:body>
         <h:form>          
             <p:menubar>
-                <p:submenu label="New" icon="ui-icon-contact">  
-                    <p:menuitem value="Mediatypes" url="/faces/asistentes/listadoMediatype.xhtml" ajax="false"/>  
-                    <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
+                <p:submenu label="Lists" icon="fa music" >  
+                    <p:menuitem value="Media type"  url="/faces/mediatype/lista.xhtml" ajax="false"  icon="fa music"/>
+                    <p:menuitem value="Genre"       url="/faces/genre/lista.xhtml" ajax="false"/>  
+                    <p:menuitem value="Artists"     url="/faces/artista/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Albums"      url="/faces/album/lista.xhtml" ajax="false"/> 
+                    <p:menuitem value="Tracks"      url="/faces/track/lista.xhtml" ajax="false"/> 
                 </p:submenu>
 
                 <f:facet name="options">                                        
@@ -46,7 +49,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="id"/>
                                 </f:facet>
-                                <h:outputText value="#{asistente.getEntidad().artistid}"/>
+                                <h:outputText value="#{asistente.getEntidad().mediatypeid}"/>
                             </p:column>
                             
                             <p:column>
@@ -70,7 +73,7 @@
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().artistid}" />
+                                        value="#{asistente.getEntidad().mediatypeid}" />
                                 </p:commandButton>
                                 <p:commandButton
                                     action="#{MediatypeBean.borrar()}"
@@ -82,7 +85,7 @@
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().artistid}" />
+                                        value="#{asistente.getEntidad().mediatypeid}" />
                                 </p:commandButton>
 
                             </p:column>
