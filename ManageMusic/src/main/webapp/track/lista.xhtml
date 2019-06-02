@@ -6,22 +6,22 @@
       xmlns:p="http://primefaces.org/ui" >
     <h:head>
         <title>
-            Listado de Artistas
+            Listado de Tracks
         </title>
-        
+
     </h:head>
     <h:body>
         <h:form>          
             <p:menubar>
                 <p:submenu label="New" icon="ui-icon-contact">  
-                    <p:menuitem value="Artistas" url="/faces/asistentes/listadoArtista.xhtml" ajax="false"/>  
+                    <p:menuitem value="Tracks" url="/faces/asistentes/listadoTrack.xhtml" ajax="false"/>  
                     <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
                 </p:submenu>
 
                 <f:facet name="options">                                        
                     <p:commandButton type="button" value="Logout" icon="pi pi-home" />
                 </f:facet>
-                
+
                 <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
 
             </p:menubar>
@@ -29,23 +29,23 @@
 
 
         <center>
-            <p:panel header="Listado de Artistas"
+            <p:panel header="Listado de Tracks"
                      style="text-align: left;width: 1250px;
                      vertical-align: middle;">
                 <f:view>
-                    <h:form id="frmArtista">                        
-                        <p:dataTable value="#{ArtistaBean.getLista()}"
+                    <h:form id="frmTrack">                        
+                        <p:dataTable value="#{TrackBean.getLista()}"
                                      var="asistente"
                                      style="font-size:14px"
                                      paginator="true"
-                                     rows="15"
+                                     rows="5"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="15,30,45">
+                                     rowsPerPageTemplate="5,10,15">
                             <p:column style="width: 25px">
                                 <f:facet name="header">
                                     <h:outputText value="id"/>
                                 </f:facet>
-                                <h:outputText value="#{asistente.getEntidad().artistid}"/>
+                                <h:outputText value="#{asistente.getEntidad().albumid}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
@@ -53,33 +53,56 @@
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().name}"/>
                             </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Compositor"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().composer}"/>
+                            </p:column>
+                            
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Duración"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().miliseconds}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{asistente.getEntidad().album.name}"/>
+                            </p:column>
+
                             <p:column style="width: 200px;text-align: center">
                                 <f:facet name="header">
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
                                 <p:commandButton
-                                    action="#{ArtistaBean.editar()}"
+                                    action="#{TrackBean.editar()}"
                                     value="Editar"
                                     immediate="true"                                    
-                                    actionListener="#{ArtistaBean.seleccionaArtist}"
+                                    actionListener="#{TrackBean.seleccionaTrack}"
                                     ajax="false"
                                     image="ui-icon ui-icon-pencil"
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().artistid}" />
+                                        value="#{asistente.getEntidad().albumid}" />
                                 </p:commandButton>
                                 <p:commandButton
-                                    action="#{ArtistaBean.borrar()}"
+                                    action="#{TrackBean.borrar()}"
                                     value="Eliminar"
                                     immediate="true"
-                                    actionListener="#{ArtistaBean.seleccionaArtist}"
+                                    actionListener="#{TrackBean.seleccionaTrack}"
                                     ajax="false"
                                     image="ui-icon ui-icon-trash"
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().artistid}" />
+                                        value="#{asistente.getEntidad().albumid}" />
                                 </p:commandButton>
 
                             </p:column>
@@ -87,7 +110,7 @@
 
                         <p:commandButton
                             value="Nuevo"
-                            action="#{ArtistaBean.nuevo()}"
+                            action="#{TrackBean.nuevo()}"
                             ajax="false"
                             image="ui-icon ui-icon-disk"/>
 

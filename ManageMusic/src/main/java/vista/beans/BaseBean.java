@@ -5,10 +5,11 @@
  */
 package vista.beans;
 
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-public class BaseBean {
+public class BaseBean{
         protected static final String ACC_CREAR = "CREAR";
         protected static final String ACC_ACTUALIZAR = "ACTUALIZAR";
 

@@ -6,9 +6,9 @@
 package vista.beans;
 
 import java.sql.SQLException;
-import model.delegate.ArtistDelegate;
+import model.delegate.GenreDelegate;
 
-import model.dto.ArtistDTO;
+import model.dto.GenreDTO;
 
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -19,107 +19,107 @@ import static vista.beans.BaseBean.ACC_CREAR;
 
 
 /* @author Asuncion */
-@ManagedBean(name = "ArtistaBean")
+@ManagedBean(name = "GenreBean")
 @SessionScoped
-public class ArtistaBean extends BaseBean {
+public class GenreBean extends BaseBean {
 
-    private ArtistDTO artistDTO;
+    private GenreDTO artistDTO;
 
-    public ArtistaBean() {
+    public GenreBean() {
     }
 
     public String nuevo() {
-        artistDTO = new ArtistDTO();
+        artistDTO = new GenreDTO();
         setAccion(ACC_CREAR);
-        return "/artista/nuevo.xhtml";
+        return "/genre/nuevo.xhtml";
     }
 
     public String editar() {
         setAccion(ACC_ACTUALIZAR);
-        return "/artista/editar.xhtml";
+        return "/genre/editar.xhtml";
     }
 
     public String crear() {
-        ArtistDelegate asistenteDelegate = new ArtistDelegate();
+        GenreDelegate asistenteDelegate = new GenreDelegate();
         try {
 
-            asistenteDelegate.crearArtist(artistDTO);
+            asistenteDelegate.crearGenre(artistDTO);
 
-            List todos = asistenteDelegate.listarArtists();
-            ArtistDTO asistenteTemp = (ArtistDTO) todos.get(todos.size() - 1);
+            List todos = asistenteDelegate.listarGenres();
+            GenreDTO asistenteTemp = (GenreDTO) todos.get(todos.size() - 1);
 
-            return "/artista/lista.xhtml";
+            return "/genre/lista.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
-            error("errorCrearArtist", "Error al crear asistente");
-            return "/artista/lista.xhtml";
+            error("errorCrearGenre", "Error al crear asistente");
+            return "/genre/lista.xhtml";
         }
     }
 
     public String actualizar() {
-        ArtistDelegate asistenteDelegate = new ArtistDelegate();
+        GenreDelegate asistenteDelegate = new GenreDelegate();
 
        // System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().toString());
         try {
 
             asistenteDelegate.actualiza(artistDTO);
-            return "/artista/lista.xhtml";
+            return "/genre/lista.xhtml";
         } catch (Exception e) {
             e.printStackTrace();
             error("errorCrearAlumno", "Error al crear articulo");
-            return "/artista/lista.xhtml";
+            return "/genre/lista.xhtml";
         }
     }
 
     public String borrar() {
-        ArtistDelegate asistenteDelegate = new ArtistDelegate();
+        GenreDelegate asistenteDelegate = new GenreDelegate();
         try {
             asistenteDelegate.elimina(artistDTO);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "/artista/lista.xhtml";
+        return "/genre/lista.xhtml";
     }
 
     public List getLista() throws SQLException {
-        ArtistDelegate asistenteDelegate = new ArtistDelegate();
+        GenreDelegate asistenteDelegate = new GenreDelegate();
         try {
 
         } catch (Exception e) {
             e.printStackTrace();
-            error("ErrorListaArtists", "Error al mostrar articulos");
+            error("ErrorListaGenres", "Error al mostrar articulos");
             //return null;
         }
-        return asistenteDelegate.listarArtists();
+        return asistenteDelegate.listarGenres();
     }
 
-    public void seleccionaArtist(ActionEvent event) {
-        ArtistDelegate asistenteDelegate = new ArtistDelegate();
+    public void seleccionaGenre(ActionEvent event) {
+        GenreDelegate asistenteDelegate = new GenreDelegate();
         String claveArtSel = (String) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap()
                 .get("claveArtSel");
-        artistDTO = new ArtistDTO();
-        artistDTO.getEntidad().setArtistid(Integer.parseInt(claveArtSel));
+        artistDTO = new GenreDTO();
+        artistDTO.getEntidad().setGenreid(Integer.parseInt(claveArtSel));
         try {
-            artistDTO = asistenteDelegate.leerArtist(artistDTO);
+            artistDTO = asistenteDelegate.leerGenre(artistDTO);
 //            System.out.println(asistenteDTO.getEntidad().getName());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public String getIdArtist() {
+    public String getIdGenre() {
 //        System.out.println(asistenteDTO.getEntidad().toString());
         try{
-            return artistDTO.getEntidad().getArtistid() + "";
+            return artistDTO.getEntidad().getGenreid() + "";
         } catch(NullPointerException e) {
             return 0 + "";
         }
 
     }
 
-    public void setIdArtist(String idArtist) {
-        artistDTO.getEntidad().setArtistid(Integer.parseInt(idArtist));
+    public void setIdGenre(String idGenre) {
+        artistDTO.getEntidad().setGenreid(Integer.parseInt(idGenre));
     }
 
     public String getName() {

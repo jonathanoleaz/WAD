@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui" >
     <h:head>
         <title>
-            Listado de Artistas
+            Listado de Mediatypes
         </title>
         
     </h:head>
@@ -14,7 +14,7 @@
         <h:form>          
             <p:menubar>
                 <p:submenu label="New" icon="ui-icon-contact">  
-                    <p:menuitem value="Artistas" url="/faces/asistentes/listadoArtista.xhtml" ajax="false"/>  
+                    <p:menuitem value="Mediatypes" url="/faces/asistentes/listadoMediatype.xhtml" ajax="false"/>  
                     <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
                 </p:submenu>
 
@@ -29,39 +29,42 @@
 
 
         <center>
-            <p:panel header="Listado de Artistas"
+            <p:panel header="Listado de Mediatypes"
                      style="text-align: left;width: 1250px;
                      vertical-align: middle;">
                 <f:view>
-                    <h:form id="frmArtista">                        
-                        <p:dataTable value="#{ArtistaBean.getLista()}"
+                    <h:form id="frmMediatype">                        
+                        <p:dataTable value="#{MediatypeBean.getLista()}"
                                      var="asistente"
                                      style="font-size:14px"
                                      paginator="true"
                                      rows="15"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="15,30,45">
+                            
                             <p:column style="width: 25px">
                                 <f:facet name="header">
                                     <h:outputText value="id"/>
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().artistid}"/>
                             </p:column>
+                            
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Nombre"/>
                                 </f:facet>
                                 <h:outputText value="#{asistente.getEntidad().name}"/>
                             </p:column>
+                            
                             <p:column style="width: 200px;text-align: center">
                                 <f:facet name="header">
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
                                 <p:commandButton
-                                    action="#{ArtistaBean.editar()}"
+                                    action="#{MediatypeBean.editar()}"
                                     value="Editar"
                                     immediate="true"                                    
-                                    actionListener="#{ArtistaBean.seleccionaArtist}"
+                                    actionListener="#{MediatypeBean.seleccionaMediatype}"
                                     ajax="false"
                                     image="ui-icon ui-icon-pencil"
                                     >
@@ -70,10 +73,10 @@
                                         value="#{asistente.getEntidad().artistid}" />
                                 </p:commandButton>
                                 <p:commandButton
-                                    action="#{ArtistaBean.borrar()}"
+                                    action="#{MediatypeBean.borrar()}"
                                     value="Eliminar"
                                     immediate="true"
-                                    actionListener="#{ArtistaBean.seleccionaArtist}"
+                                    actionListener="#{MediatypeBean.seleccionaMediatype}"
                                     ajax="false"
                                     image="ui-icon ui-icon-trash"
                                     >
@@ -87,7 +90,7 @@
 
                         <p:commandButton
                             value="Nuevo"
-                            action="#{ArtistaBean.nuevo()}"
+                            action="#{MediatypeBean.nuevo()}"
                             ajax="false"
                             image="ui-icon ui-icon-disk"/>
 

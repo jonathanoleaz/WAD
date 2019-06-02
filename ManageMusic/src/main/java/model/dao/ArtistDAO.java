@@ -123,7 +123,7 @@ public class ArtistDAO {
             sessionObj.beginTransaction();
 
             // Creating Transaction Entity
-            sessionObj.saveOrUpdate(artdto.getEntidad());
+            sessionObj.update(artdto.getEntidad());
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
@@ -151,15 +151,16 @@ public class ArtistDAO {
                 sessionObj=NewHibernateUtil.getSessionFactory().getCurrentSession();
             else
                 sessionObj=NewHibernateUtil.getSessionFactory().openSession();
+
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            ArtistDTO studObj = findRecordById(artdto.getEntidad().getArtistid());
-            sessionObj.delete(studObj);
+            // Creating Transaction Entity
+            sessionObj.delete(artdto.getEntidad());
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-            System.out.println("\nArtist With Id?= " + studObj.getEntidad().getArtistid() + " Is Successfully Deleted From The Database!\n");
+            System.out.println("\nArtist With Id?= " + artdto.getEntidad().toString() + " Is Successfully Updated In The Database!\n");
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {
@@ -169,7 +170,7 @@ public class ArtistDAO {
         } finally {
             if (sessionObj != null) {
                 sessionObj.close();
-//                HibernateUtil.closeSessionAndUnbindFromThread();
+                //HibernateUtil.closeSessionAndUnbindFromThread();
             }
         }
     }
@@ -190,6 +191,8 @@ public class ArtistDAO {
 
             findArtistObj = (Artist) sessionObj.get(Artist.class, find_student_id);
             artDTO = new ArtistDTO(findArtistObj);
+            
+            
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {

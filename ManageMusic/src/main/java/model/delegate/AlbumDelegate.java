@@ -5,24 +5,24 @@
  */
 package model.delegate;
 
-import model.dto.ArtistDTO;
+import model.dto.AlbumDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import model.facade.ArtistFacade;
+import model.facade.AlbumFacade;
 
 
 /**
  *
  * @author asuncion
  */
-public class ArtistDelegate {
+public class AlbumDelegate {
 
     private Connection cnn;
-    private ArtistFacade artFacade;
+    private AlbumFacade artFacade;
 
-    public ArtistDelegate() {
+    public AlbumDelegate() {
 
         /*String user = "root";
         String pwd = "root";
@@ -34,28 +34,28 @@ public class ArtistDelegate {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        artFacade = new ArtistFacade();
+        artFacade = new AlbumFacade();
     }
 
-    //Codigo para los Artists
-    public void crearArtist(ArtistDTO dto) throws SQLException {
+    //Codigo para los Albums
+    public void crearAlbum(AlbumDTO dto) throws SQLException {
         artFacade.crear(dto);
     }
 
-    public List<ArtistDTO> listarArtists() throws SQLException {
+    public List listarAlbums() throws SQLException {
         return artFacade.listar();
     }
 
-    public ArtistDTO leerArtist(ArtistDTO dto) throws SQLException {
+    public AlbumDTO leerAlbum(AlbumDTO dto) throws SQLException {
         return artFacade.leer(dto);
     }
 
-    public void actualiza(ArtistDTO dto) throws SQLException {
+    public void actualiza(AlbumDTO dto) throws SQLException {
         
         artFacade.actualiza(dto);
     }
 
-    public void elimina(ArtistDTO dto) throws SQLException {
+    public void elimina(AlbumDTO dto) throws SQLException {
         artFacade.elimina(dto);
     }
 

@@ -2,8 +2,8 @@ package model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dto.AlbumDTO;
-import model.entities.Album;
+import model.dto.TrackDTO;
+import model.entities.Track;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,7 +13,7 @@ import org.hibernate.SessionFactory;
  *
  * @author jonat
  */
-public class AlbumDAO {
+public class TrackDAO {
 
     static Session sessionObj;
     static SessionFactory sessionFactoryObj;
@@ -32,8 +32,8 @@ public class AlbumDAO {
         
      return sessionFactoryObj;
      }*/
-    // Method 1: This Method Used To Create A New Album Record In The Database Table
-    public void createRecord(AlbumDTO artdto) {
+    // Method 1: This Method Used To Create A New Track Record In The Database Table
+    public void createRecord(TrackDTO artdto) {
         int count = 0;
 
         try {
@@ -68,9 +68,9 @@ public class AlbumDAO {
     }
 
     // Method 2: This Method Is Used To Display The Records From The Database Table
-    public ArrayList<AlbumDTO> displayRecords() {
+    public ArrayList<TrackDTO> displayRecords() {
         List studentsList = new ArrayList();
-        ArrayList<AlbumDTO> studentsListDTO = new ArrayList();
+        ArrayList<TrackDTO> studentsListDTO = new ArrayList();
 
         try {
             // Getting Session Object From SessionFactory
@@ -83,10 +83,10 @@ public class AlbumDAO {
 
             sessionObj.beginTransaction();
 
-            studentsList = sessionObj.createQuery("FROM Album").list();
+            studentsList = sessionObj.createQuery("FROM Track").list();
 
             for (Object studentsList1 : studentsList) {
-                studentsListDTO.add(new AlbumDTO((Album) studentsList1));
+                studentsListDTO.add(new TrackDTO((Track) studentsList1));
             }
 
         } catch (Exception sqlException) {
@@ -109,7 +109,7 @@ public class AlbumDAO {
     }
 
     // Method 3: This Method Is Used To Update A Record In The Database Table   
-    public void updateRecord(AlbumDTO artdto) {
+    public void updateRecord(TrackDTO artdto) {
 
         try {
             // Getting Session Object From SessionFactory
@@ -127,7 +127,7 @@ public class AlbumDAO {
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-            System.out.println("\nAlbum With Id?= " + artdto.getEntidad().toString() + " Is Successfully Updated In The Database!\n");
+            System.out.println("\nTrack With Id?= " + artdto.getEntidad().toString() + " Is Successfully Updated In The Database!\n");
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {
@@ -143,7 +143,7 @@ public class AlbumDAO {
     }
 
     // Method 4(a): This Method Is Used To Delete A Particular Record From The Database Table
-    public void deleteRecord(AlbumDTO artdto) {
+    public void deleteRecord(TrackDTO artdto) {
         try {
             // Getting Session Object From SessionFactory
             //HibernateUtil.openSessionAndBindToThread();
@@ -160,7 +160,7 @@ public class AlbumDAO {
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-            System.out.println("\nAlbum With Id?= " + artdto.getEntidad().toString() + " Is Successfully Updated In The Database!\n");
+            System.out.println("\nTrack With Id?= " + artdto.getEntidad().toString() + " Is Successfully Updated In The Database!\n");
         } catch (Exception sqlException) {
             sqlException.printStackTrace();
             if (null != sessionObj.getTransaction()) {
@@ -176,9 +176,9 @@ public class AlbumDAO {
     }
 
     // Method 4(b): This Method To Find Particular Record In The Database Table
-    public AlbumDTO findRecordById(Integer find_student_id) {
-        AlbumDTO artDTO = new AlbumDTO();
-        Album findAlbumObj = null;
+    public TrackDTO findRecordById(Integer find_student_id) {
+        TrackDTO artDTO = new TrackDTO();
+        Track findTrackObj = null;
         try {
             // Getting Session Object From SessionFactory
             //HibernateUtil.openSessionAndBindToThread();
@@ -189,8 +189,8 @@ public class AlbumDAO {
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            findAlbumObj = (Album) sessionObj.get(Album.class, find_student_id);
-            artDTO = new AlbumDTO(findAlbumObj);
+            findTrackObj = (Track) sessionObj.get(Track.class, find_student_id);
+            artDTO = new TrackDTO(findTrackObj);
             
             
         } catch (Exception sqlException) {
@@ -221,7 +221,7 @@ public class AlbumDAO {
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            Query queryObj = sessionObj.createQuery("DELETE FROM Album");
+            Query queryObj = sessionObj.createQuery("DELETE FROM Track");
             queryObj.executeUpdate();
 
             // Committing The Transactions To The Database

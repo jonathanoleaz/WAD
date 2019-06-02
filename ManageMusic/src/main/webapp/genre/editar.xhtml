@@ -33,29 +33,23 @@
                      vertical-align: middle;">
                 <f:view>
                     <h:form id="frmArtist">
-                        <h:inputHidden id="accion" value="#{AlbumBean.accion}"/>
+                        <h:inputHidden id="accion" value="#{GenreBean.accion}"/>
                         <h:panelGrid columns="2">
-                            <h:outputText value="ID album"/>
-                            <p:inputText id="idArtist"  value="#{AlbumBean.idAlbum}"/>
+                            <h:outputText value="ID genre"/>
+                            <p:inputText id="idArtist"  value="#{GenreBean.idGenre}"/>
                             <h:outputText value="Nombre"/>
-                            <p:inputText id="nombre"    value="#{AlbumBean.name}"/>  
-                            
-                            
-                            <h:outputText value="Artista"/>
-                            <h:selectOneMenu value="#{AlbumBean.artist}">
-                                <f:selectItems value="#{AlbumBean.listaArtistas}" var="user" itemValue="#{user.getEntidad().artistid}" itemLabel="#{user.getEntidad().name}" />
-                            </h:selectOneMenu>
+                            <p:inputText id="nombre"    value="#{GenreBean.name}"/>                                                                                                     
 
                             <p:commandButton
                                 value="Regresar"
-                                action="/artista/lista.xhtml"
+                                action="/genre/lista.xhtml"
                                 ajax="false"
                                 image="ui-icon ui-icon-arrow-1-w"/>
                             
                             <p:commandButton
                                 value="Actualizar"
-                                action="#{AlbumBean.actualizar()}"
-                                rendered="#{AlbumBean.modoActualizar}"
+                                action="#{GenreBean.actualizar()}"
+                                rendered="#{GenreBean.modoActualizar}"
                                 ajax="false"
                                 image="ui-icon ui-icon-disk"/>
                         </h:panelGrid>

@@ -22,7 +22,7 @@ public class ArtistFacade {
         dao.createRecord(dto);
     }
 
-    public List listar() throws SQLException {
+    public List<ArtistDTO> listar() throws SQLException {
         return dao.displayRecords();
     }
 

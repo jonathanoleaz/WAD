@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui" >
     <h:head>
         <title>
-            Listado de Artistas
+            Listado de Genres
         </title>
         
     </h:head>
@@ -14,7 +14,7 @@
         <h:form>          
             <p:menubar>
                 <p:submenu label="New" icon="ui-icon-contact">  
-                    <p:menuitem value="Artistas" url="/faces/asistentes/listadoArtista.xhtml" ajax="false"/>  
+                    <p:menuitem value="Genres" url="/faces/asistentes/listadoGenre.xhtml" ajax="false"/>  
                     <p:menuitem value="Eventos" url="/faces/eventos/listadoEventos.xhtml" ajax="false"/>  
                 </p:submenu>
 
@@ -29,12 +29,12 @@
 
 
         <center>
-            <p:panel header="Listado de Artistas"
+            <p:panel header="Listado de Genres"
                      style="text-align: left;width: 1250px;
                      vertical-align: middle;">
                 <f:view>
-                    <h:form id="frmArtista">                        
-                        <p:dataTable value="#{ArtistaBean.getLista()}"
+                    <h:form id="frmGenre">                        
+                        <p:dataTable value="#{GenreBean.getLista()}"
                                      var="asistente"
                                      style="font-size:14px"
                                      paginator="true"
@@ -45,7 +45,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="id"/>
                                 </f:facet>
-                                <h:outputText value="#{asistente.getEntidad().artistid}"/>
+                                <h:outputText value="#{asistente.getEntidad().genreid}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
@@ -58,28 +58,28 @@
                                     <h:outputText value="Acciones"/>
                                 </f:facet>
                                 <p:commandButton
-                                    action="#{ArtistaBean.editar()}"
+                                    action="#{GenreBean.editar()}"
                                     value="Editar"
                                     immediate="true"                                    
-                                    actionListener="#{ArtistaBean.seleccionaArtist}"
+                                    actionListener="#{GenreBean.seleccionaGenre}"
                                     ajax="false"
                                     image="ui-icon ui-icon-pencil"
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().artistid}" />
+                                        value="#{asistente.getEntidad().genreid}" />
                                 </p:commandButton>
                                 <p:commandButton
-                                    action="#{ArtistaBean.borrar()}"
+                                    action="#{GenreBean.borrar()}"
                                     value="Eliminar"
                                     immediate="true"
-                                    actionListener="#{ArtistaBean.seleccionaArtist}"
+                                    actionListener="#{GenreBean.seleccionaGenre}"
                                     ajax="false"
                                     image="ui-icon ui-icon-trash"
                                     >
                                     <f:param
                                         name="claveArtSel"
-                                        value="#{asistente.getEntidad().artistid}" />
+                                        value="#{asistente.getEntidad().genreid}" />
                                 </p:commandButton>
 
                             </p:column>
@@ -87,7 +87,7 @@
 
                         <p:commandButton
                             value="Nuevo"
-                            action="#{ArtistaBean.nuevo()}"
+                            action="#{GenreBean.nuevo()}"
                             ajax="false"
                             image="ui-icon ui-icon-disk"/>
 

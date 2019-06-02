@@ -33,17 +33,17 @@
                      vertical-align: middle;">
                 <f:view>
                     <h:form id="frmArtist">
-                        <h:inputHidden id="accion" value="#{AlbumBean.accion}"/>
+                        <h:inputHidden id="accion" value="#{TrackBean.accion}"/>
                         <h:panelGrid columns="2">
                             <h:outputText value="ID album"/>
-                            <p:inputText id="idArtist"  value="#{AlbumBean.idAlbum}"/>
+                            <p:inputText id="idArtist"  value="#{TrackBean.idTrack}"/>
                             <h:outputText value="Nombre"/>
-                            <p:inputText id="nombre"    value="#{AlbumBean.name}"/>  
+                            <p:inputText id="nombre"    value="#{TrackBean.name}"/>  
                             
                             
                             <h:outputText value="Artista"/>
-                            <h:selectOneMenu value="#{AlbumBean.artist}">
-                                <f:selectItems value="#{AlbumBean.listaArtistas}" var="user" itemValue="#{user.getEntidad().artistid}" itemLabel="#{user.getEntidad().name}" />
+                            <h:selectOneMenu value="#{TrackBean.album}">
+                                <f:selectItems value="#{TrackBean.listaAlbums}" var="user" itemValue="#{user.getEntidad().albumid}" itemLabel="#{user.getEntidad().name}" />
                             </h:selectOneMenu>
 
                             <p:commandButton
@@ -54,8 +54,8 @@
                             
                             <p:commandButton
                                 value="Actualizar"
-                                action="#{AlbumBean.actualizar()}"
-                                rendered="#{AlbumBean.modoActualizar}"
+                                action="#{TrackBean.actualizar()}"
+                                rendered="#{TrackBean.modoActualizar}"
                                 ajax="false"
                                 image="ui-icon ui-icon-disk"/>
                         </h:panelGrid>
